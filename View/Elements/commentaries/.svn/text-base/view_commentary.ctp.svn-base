@@ -1,0 +1,76 @@
+<?php
+$commentary_id = $commentary['Commentary']['id'];
+$commentary_title = $commentary['Commentary']['title'];
+$commentary_summary = $commentary['Commentary']['summary'];
+$commentary_date = date('F j, Y', $time->fromString($commentary['Commentary']['published_date']));
+$commentary_body = $text->autoLink($commentary['Commentary']['body']);
+$user_name = $commentary['User']['name'];
+$linked_tags = array();
+foreach ($commentary['Tag'] as $key => $tag) {
+	$linked_tags[] = 
+		$html->link($tag['name'], array(
+			'controller' => 'commentaries', 
+			'action' => 'tagged', 
+			$tag['id']
+		));
+}
+if (! isset($newest)) $newest = false;
+$edit_button = $html->link(
+	$html->image('/img/icons/fugue/icons/pencil.png').'Edit',
+	array('controller' => 'commentaries', 'action' => 'edit', $commentary_id),
+	array(),
+	null,
+	false
+);
+$delete_button = $html->link(
+	$html->image('/img/icons/fugue/icons/cross.png').'Delete',
+	array('controller' => 'commentaries', 'action' => 'delete', $commentary_id),
+	array(),
+	'Are you sure that you want to delete this commentary?',
+	false
+);
+?>
+<div class="commentary">
+	<div class="header">
+		<?php if ($session->check('Auth.User.id')): ?>
+			<div class="controls">
+				<?php if ($permission->permitted('commentaries', 'edit')): ?>
+					<?php echo $edit_button ?>
+				<?php endif; ?>
+				<?php if ($permission->permitted('commentaries', 'delete')): ?>
+					&nbsp; <?php echo $delete_button ?>
+				<?php endif; ?>
+			</div>
+		<?php endif; ?>
+		<p class="time_posted">
+			<?php echo $commentary_date; ?>
+			<?php if ($newest): ?>
+				&nbsp;&nbsp;| &nbsp;&nbsp;Latest Commentary
+			<?php endif; ?>
+		</p>
+		<h3 class="title">
+			<?php echo $html->link($commentary_title, "/commentaries/view/$commentary_id" ); ?>
+		</h3>
+		<h4 class="summary">
+			<?php echo $commentary_summary; ?>
+		</h4>
+	</div>
+	<div class="body">
+		<?php echo $commentary_body ?>
+	</div>
+	<div class="footer">
+		<p class="link">
+			<?php echo $html->link('Link to this commentary', "/commentaries/view/$commentary_id" ); ?>
+		</p>
+		<?php if (! empty($commentary['Tag'])): ?>
+			<p class="tags">
+				<strong>Tags:</strong>
+				<?php echo implode(', ', $linked_tags); ?>
+			</p>
+		<?php endif; ?>
+	</div>
+	<?php if (isset($commentary['User']) && ! empty($commentary['User']['name'])): ?>
+		<hr />
+		<?php echo $this->element('users/profile_box', array('user' => $commentary['User'])) ?>
+	<?php endif; ?>
+</div>

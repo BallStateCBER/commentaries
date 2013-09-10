@@ -1,0 +1,151 @@
+<?php
+App::uses('AppModel', 'Model');
+App::uses('AuthComponent', 'Controller/Component');
+/**
+ * User Model
+ *
+ * @property Group $Group
+ * @property Commentary $Commentary
+ */
+class User extends AppModel {
+	public $name = 'User';
+    public $actsAs = array('Acl' => array(
+    	'type' => 'requester', 
+    	'enabled' => false // Necessary to prevent error messages while using $this->save() http://cakephp.1045679.n5.nabble.com/ACL-is-not-working-for-groups-td4953074.html
+    ));
+	
+/**
+ * Validation rules
+ *
+ * @var array
+ */
+	public $validate = array(
+		'name' => array(
+			'notEmpty' => array(
+				'rule' => 'notEmpty',
+				'message' => 'Please enter your full name.',
+				'last' => true
+			),
+			'isUnique' => array(
+				'rule' => '_isUnique',
+				'message' => 'Sorry, there is already an account with that name. If you have the misfortune of having a common name, try using your middle initial or full middle name.'
+			)
+		),
+		'new_password' => array(
+			'nonempty' => array(
+				'rule' => 'notEmpty',
+				'message' => 'Please enter a password.'
+			)
+		),
+		'confirm_password' => array(
+			'identicalFieldValues' => array(
+				'rule' => array('_identicalFieldValues', 'new_password' ),
+				'message' => 'Passwords did not match.'
+			)
+		),
+		'email' => array(
+			'is_email' => array(
+				'rule' => 'email',
+				'message' => 'That doesn\'t appear to be a valid email address.'
+			),
+			'emailUnclaimed' => array(
+				'rule' => array('_isUnique'),
+				'message' => 'Sorry, someone else is already using that email address.'
+			)
+		)
+	);
+
+	//The Associations below have been created with all possible keys, those that are not needed can be removed
+
+/**
+ * belongsTo associations
+ *
+ * @var array
+ */
+	public $belongsTo = array(
+		'Group' => array(
+			'className' => 'Group',
+			'foreignKey' => 'group_id',
+			'conditions' => '',
+			'fields' => '',
+			'order' => ''
+		)
+	);
+
+/**
+ * hasMany associations
+ *
+ * @var array
+ */
+	public $hasMany = array(
+		'Commentary' => array(
+			'className' => 'Commentary',
+			'foreignKey' => 'user_id',
+			'dependent' => false,
+			'conditions' => '',
+			'fields' => '',
+			'order' => '',
+			'limit' => '',
+			'offset' => '',
+			'exclusive' => '',
+			'finderQuery' => '',
+			'counterQuery' => ''
+		)
+	);
+
+	public function beforeSave() {
+		if (isset($this->data['User']['password'])) {
+        	$this->data['User']['password'] = AuthComponent::password($this->data['User']['password']);
+		}
+        return true;
+    }
+    
+    // Required by ACL
+	public function parentNode() {
+        if (!$this->id && empty($this->data)) {
+            return null;
+        }
+        if (isset($this->data['User']['group_id'])) {
+            $groupId = $this->data['User']['group_id'];
+        } else {
+            $groupId = $this->field('group_id');
+        }
+        if (!$groupId) {
+            return null;
+        } else {
+            return array('Group' => array('id' => $groupId));
+        }
+    }
+    
+	public function bindNode($user) {
+	    return array('model' => 'Group', 'foreign_key' => $user['User']['group_id']);
+	}
+	
+	public function _identicalFieldValues($field = array(), $compare_field = null) {
+		foreach ($field as $key => $value) {
+			if ($value !== $this->data[$this->name][$compare_field]) {
+				return false;
+			}
+		}
+		return true;
+    }
+    
+	public function _isUnique($check) {
+		$value = array_pop(array_values($check));
+		$field = array_pop(array_keys($check));
+		if ($field == 'email') {
+			$value == strtolower($value);
+		}
+		if(isset($this->data[$this->name]['id'])) {
+			$results = $this->field('id', array(
+				"$this->name.$field" => $value, 
+				"$this->name.id <>" => $this->data[$this->name]['id']
+			));
+		} else {
+			$results = $this->field('id', array(
+				"$this->name.$field" => $value
+			));
+		}
+		return empty($results);
+	}
+}

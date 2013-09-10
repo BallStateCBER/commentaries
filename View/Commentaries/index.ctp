@@ -1,0 +1,1 @@
+<?php echo $this->element('commentaries/view_commentary', array(compact('commentary', 'newest'))); ?>

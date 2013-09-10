@@ -1,0 +1,26 @@
+<?php
+	$commentaries = $this->requestAction(array('controller' => 'commentaries', 'action' => 'recent'));
+?>
+
+<?php if (empty($commentaries)): ?>
+	<!-- Error: No recent commentaries found -->
+<?php else: ?>
+	<div class="recent_commentaries">
+		<h3>
+			Recent
+		</h3>
+		<?php foreach ($commentaries as $commentary): ?>
+			<p>
+				<a href="/commentaries/view/<?php echo $commentary['Commentary']['id'] ?>">
+					<span class="title">
+						<?php echo $commentary['Commentary']['title'] ?>
+					</span>
+					<span class="summary">
+						<?php echo $commentary['Commentary']['summary'] ?>
+					</span>
+				</a>
+			</p>
+		<?php endforeach; ?>
+		<a href="/commentaries/browse" class="more">View archives</a>
+	</div>
+<?php endif; ?>

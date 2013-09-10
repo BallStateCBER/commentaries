@@ -1,0 +1,15 @@
+<?php $tags = $this->requestAction('commentaries/getTopTags/10'); ?>
+<table>
+	<?php foreach ($tags as $key => $tag): ?>
+		<tr>
+			<th>
+				<a href="/commentaries/tagged/<?php echo $tag['commentaries_tags']['tag_id']; ?>">
+					<?php echo $tag['tags']['name']; ?>
+				</a>
+			</th>
+			<td>
+				<?php echo $tag[0]['occurrences']; ?>
+			</td>
+		</tr>
+	<?php endforeach; ?>
+</table>
