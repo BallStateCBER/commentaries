@@ -72,7 +72,7 @@ class AppController extends Controller {
 		$this->Auth->loginRedirect = array('controller' => 'commentaries', 'action' => 'index', 'plugin' => false, 'admin' => false);
         
 		// Allow all actions by default, deny them explicitly in other controllers
-		$this->Auth->allow('*');
+		$this->Auth->allow();
 		
 		$this->AutoLogin->settings = array(
 			// Model settings
