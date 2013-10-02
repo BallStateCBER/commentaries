@@ -43,6 +43,7 @@ class AppController extends Controller {
 		'DataCenter.Permission'
 	);
 	public $components = array(
+		'DebugKit.Toolbar',
 		'DataCenter.AutoLogin' => array(
 			'username' => 'email',
 			'expires' => '+1 year'
