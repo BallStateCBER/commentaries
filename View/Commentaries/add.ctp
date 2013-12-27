@@ -8,7 +8,7 @@
 	'dateFormat' => 'MDY', 
 	'label' => 'Date', 
 	'minYear' => 2001,
-	'maxYear' => date('Y')
+	'maxYear' => date('Y') + 1
 )); ?>
 <?php echo $this->Form->input('body', array('label' => 'Body', 'style' => 'height: 300px; width: 100%;', 'between' => '<div class="footnote">ENTER double-spaces. SHIFT + ENTER single-spaces.</div>')); ?>
 <?php echo $this->element('tags/editor', compact('available_tags', 'selected_tags'), array('plugin' => 'DataCenter')); ?>

@@ -8,7 +8,7 @@
 	'dateFormat' => 'MDY', 
 	'label' => 'Date', 
 	'minYear' => 2001,
-	'maxYear' => date('Y'),
+	'maxYear' => date('Y') + 1,
 	'class' => 'publishing_or_date_setting'
 )); ?>
 <?php echo $this->Form->input('body', array('label' => 'Body', 'style' => 'height: 300px; width: 100%;', 'between' => '<div class="footnote">ENTER double-spaces. SHIFT + ENTER single-spaces.</div>')); ?>
