@@ -156,3 +156,21 @@ CakeLog::config('error', array(
     'types' => array('warning', 'error', 'critical', 'alert', 'emergency'),
     'file' => 'error',
 ));
+
+/* 
+ * ACL plugin settings
+ * Reference: http://www.alaxos.net/blaxos/pages/view/plugin_acl_2.0) or /data_center/plugins/Acl/Config/bootstrap.php
+ */
+Configure :: write('acl.aro.role.model', 'Group');
+Configure :: write('acl.aro.role.primary_key', '');
+Configure :: write('acl.aro.role.foreign_key', '');
+Configure :: write('acl.aro.user.model', 'User');
+Configure :: write('acl.aro.user.primary_key', '');
+Configure :: write('acl.aro.role.display_field', 'name');
+Configure :: write('acl.role.access_plugin_role_ids', array());
+Configure :: write('acl.role.access_plugin_user_ids', array(1));
+Configure :: write('acl.user.display_name', "User.username");
+Configure :: write('acl.check_act_as_requester', true);
+App :: build(array('locales' => App :: pluginPath('Acl') . DS . 'locale'));
+Configure :: write('acl.gui.roles_permissions.ajax', true);
+Configure :: write('acl.gui.users_permissions.ajax', true);
