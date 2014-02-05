@@ -41,7 +41,7 @@
 		); ?>
 	</div>
 </div>
-<?php if ($this->Session->read('Auth.User')): ?>
+<?php if ($this->Session->check('Auth.User')): ?>
 	<div>
 		<?php echo $this->element('users/user_menu'); ?>
 	</div>
