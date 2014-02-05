@@ -1,11 +1,3 @@
-<?php
-	if ($this->Session->check('Auth.User.Group.name')) {
-		$group = $this->Session->read('Auth.User.Group.name');
-	} else {
-		$group = null;
-	}
-?>
-
 <div id="user_menu">
 	<h3>User Menu</h3>	
 	<ul class="root">
@@ -21,7 +13,7 @@
 			</ul>
 		</li>
 		
-		<?php if ($group == 'Administrators' || $group == 'Commentary authors'): ?>
+		<?php if ($user_group == 'Administrators' || $user_group == 'Commentary authors'): ?>
 			<li>
 				Weekly Commentaries
 				<ul>
@@ -51,7 +43,7 @@
 			</li>
 		<?php endif; ?>
 		
-		<?php if ($group == 'Administrators'): ?>
+		<?php if ($user_group == 'Administrators'): ?>
 			<li>
 				Admin
 				<ul>
@@ -62,7 +54,7 @@
 			</li>
 		<?php endif; ?>
 		
-		<?php if ($group == 'Newsmedia'): ?>
+		<?php if ($user_group == 'Newsmedia'): ?>
 			<li>
 				Weekly Commentaries
 				<ul>
