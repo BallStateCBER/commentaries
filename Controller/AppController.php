@@ -112,14 +112,17 @@ class AppController extends Controller {
 		// Provide top tags for the sidebar
 		$this->set('top_tags', $this->TagManager->getTop('Commentary', 10));
 		
-		// Set list of unpublished commentaries for members of the newsmedia 
 		if ($this->Auth->loggedIn()) {
 			$group = $this->Auth->user('Group.name');
-			if ($group == 'Newsmedia') {
-				$this->set('unpublished', $Commentary->getUnpublishedList());
-			}
+		} else {
+			$group = null;
 		}
+		$this->set('user_group', $group);
 		
+		// Set list of unpublished commentaries for members of the newsmedia
+		if ($group == 'Newsmedia') {
+			$this->set('unpublished', $Commentary->getUnpublishedList());
+		}
 	}
 	
 /**
