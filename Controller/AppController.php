@@ -113,14 +113,14 @@ class AppController extends Controller {
 		$this->set('top_tags', $this->TagManager->getTop('Commentary', 10));
 		
 		if ($this->Auth->loggedIn()) {
-			$group = $this->Auth->user('Group.name');
+			$user_group = $this->Auth->user('Group.name');
 		} else {
-			$group = null;
+			$user_group = null;
 		}
-		$this->set('user_group', $group);
+		$this->set('user_group', $user_group);
 		
 		// Set list of unpublished commentaries for members of the newsmedia
-		if ($group == 'Newsmedia') {
+		if ($user_group == 'Newsmedia') {
 			$this->set('unpublished', $Commentary->getUnpublishedList());
 		}
 	}
