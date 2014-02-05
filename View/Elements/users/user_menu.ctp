@@ -1,4 +1,9 @@
 <?php
+	if ($this->Session->check('Auth.User.Group.name')) {
+		$group = $this->Session->read('Auth.User.Group.name');
+	} else {
+		$group = null;
+	}
 ?>
 <?php if ($this->Session->check('Auth.User')): ?>
 	<div id="user_menu">
