@@ -1,9 +1,9 @@
 <h1 class="page_title">
-	Commentary Drafts
+	<?php echo $title_for_layout; ?>
 </h1>
 
 <?php if (empty($commentaries)): ?>
-	You currently have no commentaries saved as drafts.
+	There are currently no unpublished commentaries.
 <?php else: ?>
 	<table class="my_commentaries">
 		<thead>
