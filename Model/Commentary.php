@@ -146,4 +146,15 @@ class Commentary extends AppModel {
 		$this->set('published_date', date('Y-m-d', time()).' 00:00:00');
 		return $this->save();
 	}
+	
+	public function getUnpublishedList() {
+		return $this->find('list', array(
+			'conditions' => array(
+				'Commentary.is_published' => 0
+			),
+			'order' => array(
+				'Commentary.modified DESC'
+			)
+		));
+	}
 }
