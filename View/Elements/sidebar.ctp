@@ -1,3 +1,9 @@
+<?php if ($this->Session->check('Auth.User')): ?>
+	<div>
+		<?php echo $this->element('users/user_menu'); ?>
+	</div>
+<?php endif; ?>
+
 <div>
 	<h3>
 		About
@@ -41,11 +47,7 @@
 		); ?>
 	</div>
 </div>
-<?php if ($this->Session->check('Auth.User')): ?>
-	<div>
-		<?php echo $this->element('users/user_menu'); ?>
-	</div>
-<?php else: ?>
+<?php if (! $this->Session->check('Auth.User')): ?>
 	<div>
 		<?php echo $this->Html->link('Admin login', array('controller' => 'users', 'action' => 'login', 'admin' => false, 'plugin' => false)); ?>
 	</div>
