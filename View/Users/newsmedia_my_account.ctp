@@ -40,10 +40,4 @@
 </fieldset>
 
 <?php
-	echo $this->Form->input(
-		'id', 
-		array(
-			'type'=>'hidden'
-		)
-	);
 	echo $this->Form->end('Submit');
