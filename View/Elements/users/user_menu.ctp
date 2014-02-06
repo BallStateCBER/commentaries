@@ -59,6 +59,7 @@
 				Admin
 				<ul>
 					<li><?php echo $this->Html->link('Add a User', array('controller' => 'users', 'action' => 'add', 'admin' => false, 'plugin' => false)); ?></li>
+					<li><?php echo $this->Html->link('Next Article to Publish', array('controller' => 'commentaries', 'action' => 'index', 'admin' => false, 'newsmedia' => true, 'plugin' => false)); ?></li>
 					<li><a href="/acl_manager/acl">Manage Permissions</a></li>
 					<li><a href="/tags/manage/">Manage Tags</a></li>
 				</ul>
