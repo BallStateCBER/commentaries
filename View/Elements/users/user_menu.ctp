@@ -7,7 +7,7 @@
 			<ul>
 				<?php if ($user_group == 'Newsmedia'): ?>
 					<li>
-						<?php echo $this->Html->link('Next Article to Publish', array('controller' => 'commentaries', 'action' => 'drafts', 'admin' => false, 'plugin' => false)); ?>
+						<?php echo $this->Html->link('Next Article to Publish', array('controller' => 'commentaries', 'action' => 'index', 'admin' => false, 'newsmedia' => true, 'plugin' => false)); ?>
 					</li>
 				<?php else: ?>
 					<li>
