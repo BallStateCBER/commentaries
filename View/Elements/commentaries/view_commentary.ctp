@@ -5,17 +5,29 @@ if (! isset($newest)) $newest = false;
 	<div class="header">
 		<?php if ($this->Session->check('Auth.User.id')): ?>
 			<div class="controls">
-				<?php if ($this->Permission->check('Commentaries', 'edit')): ?>
+				<?php if ($acl->check(array('User' => $auth_user), 'controllers/commentaries/edit')): ?>
 					<?php echo $this->Html->link(
 						$this->Html->image('/data_center/img/icons/pencil.png').'Edit',
-						array('controller' => 'commentaries', 'action' => 'edit', $commentary['Commentary']['id']),
+						array(
+							'controller' => 'commentaries', 
+							'action' => 'edit', 
+							$commentary['Commentary']['id'],
+							'admin' => false,
+							'newsmedia' => false
+						),
 						array('escape' => false)
 					); ?>
 				<?php endif; ?>
-				<?php if ($this->Permission->check('Commentaries', 'delete')): ?>
+				<?php if ($acl->check(array('User' => $auth_user), 'controllers/commentaries/delete')): ?>
 					&nbsp; <?php echo $this->Html->link(
 						$this->Html->image('/data_center/img/icons/cross.png').'Delete',
-						array('controller' => 'commentaries', 'action' => 'delete', $commentary['Commentary']['id']),
+						array(
+							'controller' => 'commentaries', 
+							'action' => 'delete', 
+							$commentary['Commentary']['id'],
+							'admin' => false,
+							'newsmedia' => false
+						),
 						array('escape' => false),
 						'Are you sure that you want to delete this commentary?'
 					); ?>
@@ -33,7 +45,9 @@ if (! isset($newest)) $newest = false;
 				'controller' => 'commentaries',
 				'action' => 'view',
 				'id' => $commentary['Commentary']['id'],
-				'slug' =>  $commentary['Commentary']['slug']
+				'slug' =>  $commentary['Commentary']['slug'],
+				'admin' => false,
+				'newsmedia' => false
 			)); ?>
 		</h3>
 		<h4 class="summary">
@@ -50,7 +64,9 @@ if (! isset($newest)) $newest = false;
 					'controller' => 'commentaries', 
 					'action' => 'view', 
 					'id' => $commentary['Commentary']['id'],
-					'slug' => $commentary['Commentary']['slug']
+					'slug' => $commentary['Commentary']['slug'],
+					'admin' => false,
+					'newsmedia' => false
 				), true);
 			?>
 			Link to this commentary: <?php echo $this->Html->link($permalink, $permalink); ?>
@@ -64,7 +80,9 @@ if (! isset($newest)) $newest = false;
 						$linked_tags[] = $this->Html->link($tag['name'], array(
 							'controller' => 'commentaries', 
 							'action' => 'tagged', 
-							'id' => $tag['id']
+							'id' => $tag['id'],
+							'admin' => false,
+							'newsmedia' => false
 						));
 					} 
 					echo implode(', ', $linked_tags);
