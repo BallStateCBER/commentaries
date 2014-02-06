@@ -8,10 +8,6 @@
 	</h1>
 <?php $this->end(); ?>
 
-<?php if ($user_group == 'Newsmedia'): ?>
-	<?php echo $this->element('newsmedia/alert'); ?>
-<?php endif; ?>
-
 <div id="content">
 	<?php echo $this->fetch('content'); ?>
 </div>
