@@ -18,6 +18,7 @@ class CommentariesController extends AppController {
 			'export', 
 			'generate_slugs', 
 			'index', 
+			'newsmedia_index',
 			'rss', 
 			'tagged', 
 			'tags', 
