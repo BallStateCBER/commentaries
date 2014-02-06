@@ -120,7 +120,7 @@ class AppController extends Controller {
 		$this->set('user_group', $user_group);
 	}
 	
-/**
+	/**
 	 * Renders a page that displays $params['message'] 
 	 * with optional $params['class'], optional title $params['title'], and
 	 * optional link back to $params['back'] (which can be a URL or array).
