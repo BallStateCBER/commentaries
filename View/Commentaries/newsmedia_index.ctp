@@ -7,5 +7,10 @@
 		The next article to publish has not yet been added. Please check back later.
 	</p>
 <?php else: ?>
-	<?php echo $this->element('commentaries/view_commentary'); ?>
+	<div id="next_article_to_publish">
+		<?php echo $this->element('commentaries/view_commentary'); ?>
+	</div>
+	<?php $this->Js->buffer("
+		$('#next_article_to_publish .time_posted').prepend('Publish on ');
+	"); ?>
 <?php endif; ?>
