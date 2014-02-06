@@ -4,9 +4,15 @@
 		<li>
 			<?php echo $this->Session->read('Auth.User.name'); ?>
 			<ul>
-				<li>
-					<?php echo $this->Html->link('My Account', array('controller' => 'users', 'action' => 'my_account', 'admin' => false, 'plugin' => false)); ?>
-				</li>
+				<?php if ($user_group == 'Newsmedia'): ?>
+					<li>
+						<?php echo $this->Html->link('Next Article to Publish', array('controller' => 'commentaries', 'action' => 'drafts', 'admin' => false, 'plugin' => false)); ?>
+					</li>
+				<?php else: ?>
+					<li>
+						<?php echo $this->Html->link('My Account', array('controller' => 'users', 'action' => 'my_account', 'admin' => false, 'plugin' => false)); ?>
+					</li>
+				<?php endif; ?>
 				<li>
 					<?php echo $this->Html->link('Log out', array('controller' => 'users', 'action' => 'logout', 'admin' => false, 'plugin' => false)); ?>
 				</li>
@@ -50,17 +56,6 @@
 					<li><?php echo $this->Html->link('Add a User', array('controller' => 'users', 'action' => 'add', 'admin' => false, 'plugin' => false)); ?></li>
 					<li><a href="/acl_manager/acl">Manage Permissions</a></li>
 					<li><a href="/tags/manage/">Manage Tags</a></li>
-				</ul>
-			</li>
-		<?php endif; ?>
-		
-		<?php if ($user_group == 'Newsmedia'): ?>
-			<li>
-				Weekly Commentaries
-				<ul>
-					<li>
-						<?php echo $this->Html->link('Unpublished', array('controller' => 'commentaries', 'action' => 'drafts', 'admin' => false, 'plugin' => false)); ?>
-					</li>
 				</ul>
 			</li>
 		<?php endif; ?>
