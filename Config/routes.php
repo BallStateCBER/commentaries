@@ -51,5 +51,7 @@ Router::connect(
 // So /index.rss leads to the RSS feed
 Router::connect('/index', 		array('controller' => 'commentaries', 'action' => 'rss'));
 
+Router::connect('/newsmedia', 	array('controller' => 'commentaries', 'action' => 'index', 'newsmedia' => true));
+
 CakePlugin::routes();
 require CAKE . 'Config' . DS . 'routes.php';
