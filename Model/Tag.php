@@ -130,4 +130,8 @@ class Tag extends AppModel {
 		}
 		return $level;
     }
+	
+	public function parentNode() {
+		return null;
+	}
 }

@@ -172,4 +172,8 @@ class Commentary extends AppModel {
 			)
 		));
 	}
+	
+	public function parentNode() {
+		return null;
+	}
 }
