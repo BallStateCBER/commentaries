@@ -180,6 +180,41 @@ class UsersController extends AppController {
 			'title_for_layout' => 'My Profile'
 		));
 	}
+
+	public function newsmedia_my_account() {
+		$this->User->id = $this->Auth->user('id');
+		if ($this->request->is('post')) {
+			$data = $this->request->data['User'];
+			
+			if ($data['new_password'] == '') {
+				// Unset both fields so they don't go through validation
+				unset($this->request->data['User']['new_password']);
+				unset($this->request->data['User']['confirm_password']);
+			}
+			
+			$this->User->set($data);
+			if ($this->User->validates()) {
+				App::uses('Security', 'Utility');
+				$this->User->set('password', Security::hash($data['new_password'], null, true));
+				$this->User->set('email', strtolower(trim($data['email'])));
+				
+				if ($this->User->save()) {
+					$this->Flash->success('Your information has been updated.');
+				} else {
+					$this->Flash->error('There was an error updating your information.');
+				}
+			}
+			
+			// Unset passwords so those fields aren't auto-populated
+			unset($this->request->data['User']['new_password']);
+			unset($this->request->data['User']['confirm_password']);
+		} else {
+			$this->request->data = $this->User->read();
+		}
+		$this->set(array(
+			'title_for_layout' => 'My Account'
+		));
+	}
 	
 	// Set up ACL
 	/*
