@@ -276,7 +276,7 @@ class CommentariesController extends AppController {
         }
 		$this->set(array(
 			'commentaries' => $commentaries,
-			'title_for_layout' => 'Unpublished Commentaries' 
+			'title_for_layout' => 'Commentary Drafts' 
 		));
 	}
 	
