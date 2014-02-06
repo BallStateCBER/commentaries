@@ -12,7 +12,7 @@ class CommentariesController extends AppController {
 
 	public function beforeFilter() {
 		parent::beforeFilter();
-		$this->Auth->deny('add', 'edit', 'delete', 'drafts', 'publish');	
+		$this->Auth->deny('add', 'edit', 'delete', 'drafts', 'publish', 'newsmedia_index');
 	}
 	
 /**
@@ -374,5 +374,12 @@ class CommentariesController extends AppController {
 			$this->Flash->set('Created slugs for '.count($commentaries).' commentaries.', 'succes');
 		}
 		$this->render('DataCenter.Common/blank');
+	}
+
+	public function newsmedia_index() {
+		$this->set(array(
+			'commentary' => $this->Commentary->getNextForNewsmedia(),
+			'title_for_layout' => 'Next Article to Publish'
+		));
 	}
 }
