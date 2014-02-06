@@ -118,11 +118,6 @@ class AppController extends Controller {
 			$user_group = null;
 		}
 		$this->set('user_group', $user_group);
-		
-		// Set list of unpublished commentaries for members of the newsmedia
-		if ($user_group == 'Newsmedia') {
-			$this->set('unpublished', $Commentary->getUnpublishedList());
-		}
 	}
 	
 /**
