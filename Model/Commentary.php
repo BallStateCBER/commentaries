@@ -157,4 +157,16 @@ class Commentary extends AppModel {
 			)
 		));
 	}
+	
+	public function getNextForNewsmedia() {
+		return $this->find('first', array(
+			'conditions' => array(
+				'Commentary.is_published' => 0,
+				'Commentary.published_date >' => date('Y-m-d').' 00:00:00'
+			),
+			'order' => array(
+				'Commentary.published_date ASC'
+			)
+		));
+	}
 }
