@@ -8,7 +8,13 @@ App::uses('AppModel', 'Model');
  * @property Commentary $Commentary
  */
 class Tag extends AppModel {
-	public $actsAs = array('Containable', 'Tree');
+	public $actsAs = array(
+		'Acl' => array(
+			'type' => 'controlled'
+		),
+		'Containable', 
+		'Tree'
+	);
 	
 /**
  * Validation rules
