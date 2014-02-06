@@ -1,3 +1,7 @@
+<?php
+	$user_group = $auth_user['Group']['name'];
+?>
+
 <div id="user_menu">
 	<h3>
 		<?php echo $this->Session->read('Auth.User.name'); ?>

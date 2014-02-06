@@ -98,23 +98,19 @@ class AppController extends Controller {
 		// Provide recent commentaries for the sidebar
 		App::Uses('Commentary', 'Model');
 		$Commentary = new Commentary();
-		$this->set('recent_commentaries', $Commentary->find('all', array(
+		$recent_commentaries = $Commentary->find('all', array(
 			'limit' => 4,
 			'order' => 'Commentary.published_date DESC',
 			'fields' => array('Commentary.id', 'Commentary.title', 'Commentary.summary', 'Commentary.slug'),
 			'conditions' => array('Commentary.is_published' => 1),
 			'contain' => false
-		)));
-		
-		// Provide top tags for the sidebar
-		$this->set('top_tags', $this->TagManager->getTop('Commentary', 10));
-		
-		if ($this->Auth->loggedIn()) {
-			$user_group = $this->Auth->user('Group.name');
-		} else {
-			$user_group = null;
-		}
-		$this->set('user_group', $user_group);
+		));
+		$this->set(array(
+			'acl' => $this->Acl,
+			'auth_user' => $this->Auth->loggedIn() ? $this->Auth->user() : null,
+			'recent_commentaries' => $recent_commentaries,
+			'top_tags' => $this->TagManager->getTop('Commentary', 10)
+		));
 	}
 	
 	/**
