@@ -9,7 +9,13 @@ class TagsController extends AppController {
 
 	public function beforeFilter() {
 		parent::beforeFilter();
-		$this->Auth->deny('edit', 'delete', 'manage');
+		$this->Auth->allow(
+			'auto_complete',
+			'get_name',
+			'getnodes',
+			'index',
+			'view'
+		);
 	}
 
 /**

@@ -12,7 +12,17 @@ class CommentariesController extends AppController {
 
 	public function beforeFilter() {
 		parent::beforeFilter();
-		$this->Auth->deny('add', 'edit', 'delete', 'drafts', 'publish', 'newsmedia_index');
+		$this->Auth->allow(
+			'autopublish', 
+			'browse', 
+			'export', 
+			'generate_slugs', 
+			'index', 
+			'rss', 
+			'tagged', 
+			'tags', 
+			'view'
+		);
 	}
 	
 /**
