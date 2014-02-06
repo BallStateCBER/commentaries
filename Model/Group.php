@@ -6,7 +6,11 @@ App::uses('AppModel', 'Model');
  * @property User $User
  */
 class Group extends AppModel {
-	public $actsAs = array('Acl' => array('type' => 'both'));
+	public $actsAs = array(
+		'Acl' => array(
+			'type' => 'both'
+		)
+	);
 	
 /**
  * Validation rules
