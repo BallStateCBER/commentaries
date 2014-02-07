@@ -101,6 +101,8 @@ class CommentariesController extends AppController {
 					$this->Flash->set('The commentary could not be saved. Please try again.', 'error');
 				}
 			}
+		} else {
+			$this->request->data['Commentary']['alert_media'] = 1;
 		}
 		
 		// Get the list of authors (not users with permission to post, the original authors of the commentaries posted)
