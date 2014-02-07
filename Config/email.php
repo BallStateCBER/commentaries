@@ -60,7 +60,8 @@ class EmailConfig {
 		'returnPath' => 'commentaries@cberdata.org',
 		'replyTo' => 'cber@bsu.edu',
 		'emailFormat' => 'both',
-		'subject' => 'Mike Hicks Weekly Commentary now available'
+		'subject' => 'Mike Hicks Weekly Commentary now available',
+		'template' => 'newsmedia_alert'
 	);
 
 	public $smtp = array(
