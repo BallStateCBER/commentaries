@@ -79,7 +79,7 @@ class CommentariesController extends AppController {
  * @return void
  */
 	public function add() {
-		if (! empty($this->request->data)) {
+		if ($this->request->is('post')) {
 			// Process 'custom tags' field and eliminate duplicates
 			$this->TagManager->processTagInput($this->request->data);
 			
@@ -124,7 +124,7 @@ class CommentariesController extends AppController {
 			$this->redirect($this->referer());
 		}
 		$this->Commentary->id = $id;
-		if (! empty($this->request->data)) {
+		if ($this->request->is('post')) {
 			
 			$this->__setupAutopublish();
 			
