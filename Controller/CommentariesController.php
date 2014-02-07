@@ -88,7 +88,7 @@ class CommentariesController extends AppController {
 			$this->Commentary->create($this->request->data);
 			if ($this->Commentary->validates()) {
 				if ($this->Commentary->save()) {
-					$this->Flash->set('Commentary added', 'success');
+					$this->Flash->success('Commentary added');
 					if ($this->request->data['Commentary']['is_published']) {
 						$this->__exportToIceMiller();
 					}
@@ -98,7 +98,7 @@ class CommentariesController extends AppController {
 						$this->Commentary->id
 					));
 				} else {
-					$this->Flash->set('The commentary could not be saved. Please try again.', 'error');
+					$this->Flash->error('The commentary could not be saved. Please try again.');
 				}
 			}
 		} else {
@@ -135,7 +135,7 @@ class CommentariesController extends AppController {
  */
 	function edit($id = false) {
 		if (! $id) {
-			$this->Flash->set('No ID specified. Which commentary do you want to edit?', 'error');
+			$this->Flash->error('No ID specified. Which commentary do you want to edit?');
 			$this->redirect($this->referer());
 		}
 		$this->Commentary->id = $id;
@@ -149,19 +149,19 @@ class CommentariesController extends AppController {
 			$this->Commentary->set($this->request->data);
 			if ($this->Commentary->validates()) {
 				if ($this->Commentary->save()) {
-					$this->Flash->set('Commentary updated', 'success');
+					$this->Flash->success('Commentary updated');
 					$this->redirect(array(
 						'controller' => 'commentaries', 
 						'action' => 'view', 
 						'id' => $id
 					));
 				} else {
-					$this->Flash->set('There was an error updating this commentary.', 'error');
+					$this->Flash->error('There was an error updating this commentary.');
 				}
 			}
 		} else {
 			if (! $this->Commentary->exists($id)) {
-				$this->Flash->set('The specified commentary (ID: '.$id.') doesn\'t exist.', 'error');
+				$this->Flash->error('The specified commentary (ID: '.$id.') doesn\'t exist.');
 				$this->redirect($this->referer());
 			}
 			$this->request->data = $this->Commentary->read();
@@ -213,13 +213,13 @@ class CommentariesController extends AppController {
 			throw new NotFoundException(__('Invalid commentary'));
 		}
 		if ($this->Commentary->delete()) {
-			$this->Flash->set('Commentary deleted', 'success');
+			$this->Flash->success('Commentary deleted');
 			$this->redirect(array(
 				'controller' => 'commentaries', 
 				'action' => 'index'
 			));
 		}
-		$this->Flash->set('Commentary was not deleted', 'error');
+		$this->Flash->error('Commentary was not deleted');
 		$this->redirect(array(
 			'controller' => 'commentaries', 
 			'action' => 'index'
@@ -231,15 +231,15 @@ class CommentariesController extends AppController {
 			$id = $this->Commentary->id;	
 		}
 		if ($this->Commentary->exportToIceMiller($id)) {
-			$this->Flash->set("Commentary #$id copied to Ice Miller website.", 'success');	
+			$this->Flash->success("Commentary #$id copied to Ice Miller website.");	
 		} else {
-			$this->Flash->set("There was an error copying commentary #$id to Ice Miller website. Please contact site administrator for assistance.", 'error');	
+			$this->Flash->error("There was an error copying commentary #$id to Ice Miller website. Please contact site administrator for assistance.");	
 		}	
 	}
 	
 	public function tagged($tag_id = null) {
 		if (! is_numeric($tag_id)) {
-			$this->Flash->set('Tag not found.', 'error');
+			$this->Flash->error('Tag not found.');
 			$this->redirect(array(
 				'controller' => 'commentaries',
 				'action' => 'tags'
@@ -249,7 +249,7 @@ class CommentariesController extends AppController {
 		$this->Commentary->Tag->read();
 		$tagName = $this->Commentary->Tag->data['Tag']['name'];
 		if (! $tagName) {
-			$this->Flash->set('Tag not found.', 'error');
+			$this->Flash->error('Tag not found.');
 			$this->redirect(array(
 				'controller' => 'commentaries',
 				'action' => 'tags'
@@ -359,10 +359,10 @@ class CommentariesController extends AppController {
 		if ($is_published) {
 			$this->Flash->set("<em>$title</em> is already published.");
 		} elseif ($this->Commentary->publish()) {
-			$this->Flash->set("<em>$title</em> has been published.", 'success');
+			$this->Flash->success("<em>$title</em> has been published.");
 			$this->__exportToIceMiller();
 		} else {
-			$this->Flash->set("There was an error publishing <em>$title</em>.", 'error');
+			$this->Flash->error("There was an error publishing <em>$title</em>.");
 		}
 		$this->redirect($this->referer());
 	}
