@@ -92,6 +92,9 @@ class CommentariesController extends AppController {
 					if ($this->request->data['Commentary']['is_published']) {
 						$this->__exportToIceMiller();
 					}
+					if ($this->request->data['Commentary']['alert_media']) {
+						$this->__alertNewsmedia($this->request->data['Commentary']);
+					}
 					$this->redirect(array(
 						'controller' => 'commentaries', 
 						'action' => 'view', 
@@ -478,5 +481,57 @@ class CommentariesController extends AppController {
 			'commentary' => $this->Commentary->getNextForNewsmedia(),
 			'title_for_layout' => 'Next Article to Publish'
 		));
+	}
+	
+	private function __alertNewsmedia($commentary) {
+		$this->loadModel('User');
+		$newsmedia = $this->User->find('all', array(
+			'conditions' => array(
+				'User.group_id' => 3 // "Newsmedia"
+			),
+			'contain' => false,
+			'fields' => array(
+				'User.name',
+				'User.email'
+			)
+		));
+		if (empty($newsmedia)) {
+			$this->Flash->set('Newsmedia not alerted. None are currently in the database.');
+			return;	
+		}
+		
+		App::uses('CakeEmail', 'Network/Email');
+		$email = new CakeEmail('newsmedia_alert');
+		$error_recipients = array();
+		foreach ($newsmedia as $user) {
+			$recipient_email = $user['User']['email'];
+			$email->to($recipient_email);
+			$email->viewVars(array(
+				'commentary' => $commentary,
+				'recipient_name' => $user['User']['name'],
+				'url' => Router::url(
+					array(
+						'controller' => 'commentaries',
+						'action' => 'view',
+						'id' => $commentary['id'],
+						'slug' =>  $commentary['slug']
+					),
+					true
+				),
+				'date' => date('l, F jS', strtotime($commentary['published_date']))
+			));
+			if (! $email->send()) {
+				$error_recipients[] = $recipient_email;
+			}
+		}
+		if (empty($error_recipients)) {
+			$this->Flash->success('Newsmedia alerted.');
+		} elseif (count($error_recipients) == count($newsmedia)) {
+			$this->Flash->error('Error: No newsmedia alerts were successfully sent.');
+		} else {
+			$success_count = count($newsmedia) - count($error_recipients);
+			$this->Flash->success($success_count.__n(' member', ' members', $success_count).' of the newsmedia alerted.');
+			$this->Flash->error('Error sending newsmedia alerts to the following: '.implode(', ', $error_recipients));
+		}
 	}
 }
