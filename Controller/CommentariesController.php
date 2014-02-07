@@ -87,12 +87,16 @@ class CommentariesController extends AppController {
 			
 			$this->Commentary->create($this->request->data);
 			if ($this->Commentary->validates()) {
-				if ($this->Commentary->save($this->request->data)) {
+				if ($this->Commentary->save()) {
 					$this->Flash->set('Commentary added', 'success');
 					if ($this->request->data['Commentary']['is_published']) {
 						$this->__exportToIceMiller();
 					}
-					$this->redirect(array('controller' => 'commentaries', 'action' => 'view', $this->Commentary->id));
+					$this->redirect(array(
+						'controller' => 'commentaries', 
+						'action' => 'view', 
+						$this->Commentary->id
+					));
 				} else {
 					$this->Flash->set('The commentary could not be saved. Please try again.', 'error');
 				}
@@ -100,16 +104,25 @@ class CommentariesController extends AppController {
 		}
 		
 		// Get the list of authors (not users with permission to post, the original authors of the commentaries posted)
-		// and add current user 
-		App::uses('User', 'Model');
-		$User = new User();
-		$authors = $User->find('list', array('conditions' => array('author' => 1)));
+		$this->loadModel('User');
+		$authors = $this->User->find('list', array(
+			'conditions' => array(
+				'author' => 1
+			)
+		));
+		// and add current user
 		$authors[$this->Auth->user('id')] = $this->Auth->user('name');
 		
 		// Sends $available_tags and $unlisted_tags to the view
 		$this->TagManager->prepareEditor($this);
-		$this->set(array('title_for_layout' => 'Add Commentary'));
-		$this->set(compact('users', 'tags', 'authors'));
+		$this->set(array(
+			'title_for_layout' => 'Add Commentary'
+		));
+		$this->set(compact(
+			'users', 
+			'tags', 
+			'authors'
+		));
 	}
 
 /**
@@ -133,9 +146,13 @@ class CommentariesController extends AppController {
 			
 			$this->Commentary->set($this->request->data);
 			if ($this->Commentary->validates()) {
-				if ($this->Commentary->save($this->request->data)) {
+				if ($this->Commentary->save()) {
 					$this->Flash->set('Commentary updated', 'success');
-					$this->redirect(Router::url(array('controller' => 'commentaries', 'action' => 'view', 'id' => $id)));
+					$this->redirect(array(
+						'controller' => 'commentaries', 
+						'action' => 'view', 
+						'id' => $id
+					));
 				} else {
 					$this->Flash->set('There was an error updating this commentary.', 'error');
 				}
@@ -149,10 +166,13 @@ class CommentariesController extends AppController {
 		}
 
 		// Get the list of authors (not users with permission to post, the original authors of the commentaries posted)
-		// and add current user 
-		App::uses('User', 'Model');
-		$User = new User();
-		$authors = $User->find('list', array('conditions' => array('author' => 1)));
+		$this->loadModel('User');
+		$authors = $this->User->find('list', array(
+			'conditions' => array(
+				'author' => 1
+			)
+		));
+		// and add current user
 		$authors[$this->Auth->user('id')] = $this->Auth->user('name');
 		
 		// Sends $available_tags and $unlisted_tags to the view
@@ -192,10 +212,16 @@ class CommentariesController extends AppController {
 		}
 		if ($this->Commentary->delete()) {
 			$this->Flash->set('Commentary deleted', 'success');
-			$this->redirect(array('controller' => 'commentaries', 'action' => 'index'));
+			$this->redirect(array(
+				'controller' => 'commentaries', 
+				'action' => 'index'
+			));
 		}
 		$this->Flash->set('Commentary was not deleted', 'error');
-		$this->redirect(array('controller' => 'commentaries', 'action' => 'index'));
+		$this->redirect(array(
+			'controller' => 'commentaries', 
+			'action' => 'index'
+		));
 	}
 	
 	private function __exportToIceMiller($id = null) {
@@ -212,22 +238,42 @@ class CommentariesController extends AppController {
 	public function tagged($tag_id = null) {
 		if (! is_numeric($tag_id)) {
 			$this->Flash->set('Tag not found.', 'error');
-			$this->redirect('/commentaries/tags');
+			$this->redirect(array(
+				'controller' => 'commentaries',
+				'action' => 'tags'
+			));
 		}
 		$this->Commentary->Tag->id = $tag_id;
 		$this->Commentary->Tag->read();
-		if (! $tagName = $this->Commentary->Tag->data['Tag']['name']) {
+		$tagName = $this->Commentary->Tag->data['Tag']['name'];
+		if (! $tagName) {
 			$this->Flash->set('Tag not found.', 'error');
-			$this->redirect('/commentaries/tags');
+			$this->redirect(array(
+				'controller' => 'commentaries',
+				'action' => 'tags'
+			));
 		}
 		$results = $this->Commentary->Tag->find('all', array(
-			'conditions' => array('Tag.id' => $tag_id),
-			'fields' => array('Tag.id'),
+			'conditions' => array(
+				'Tag.id' => $tag_id
+			),
+			'fields' => array(
+				'Tag.id'
+			),
 			'contain' => array(
 				'Commentary' => array(
 					'order' => 'Commentary.published_date DESC',
-					'fields' => array('Commentary.id', 'Commentary.title', 'Commentary.created', 'Commentary.summary', 'Commentary.slug', 'Commentary.published_date'),
-					'conditions' => array('Commentary.is_published' => 1)
+					'fields' => array(
+						'Commentary.id', 
+						'Commentary.title', 
+						'Commentary.created', 
+						'Commentary.summary', 
+						'Commentary.slug', 
+						'Commentary.published_date'
+					),
+					'conditions' => array(
+						'Commentary.is_published' => 1
+					)
 				)
 			)
 		));
@@ -253,8 +299,11 @@ class CommentariesController extends AppController {
 				'Commentary.delay_publishing' => 1, 
 				'Commentary.published_date <=' => date('Y-m-d').' 00:00:00'
 			),
-			'fields' => array('Commentary.id', 'Commentary.title'),
-			'contain' => array()
+			'fields' => array(
+				'Commentary.id', 
+				'Commentary.title'
+			),
+			'contain' => false
 		));
 		if (empty($commentaries)) {
 			$this->Flash->set('No commentaries to auto-publish today.');
@@ -265,7 +314,7 @@ class CommentariesController extends AppController {
 				$this->Commentary->id = $id;
 				$this->Commentary->saveField('is_published', 1);
 				$this->Commentary->saveField('delay_publishing', 0);
-				$this->Flash->set("Auto-published commentary #$id ($title)", 'success');
+				$this->Flash->success("Auto-published commentary #$id ($title)");
 				$this->__exportToIceMiller();
 			}
 		}
@@ -275,9 +324,18 @@ class CommentariesController extends AppController {
 	public function drafts() {		
 		// Get commentaries
 		$commentaries = $this->Commentary->find('all', array(
-			'conditions' => array('Commentary.is_published' => 0),
-			'order' => array('Commentary.modified DESC'),
-			'fields' => array('Commentary.id', 'Commentary.title', 'Commentary.modified', 'Commentary.slug'),
+			'conditions' => array(
+				'Commentary.is_published' => 0
+			),
+			'order' => array(
+				'Commentary.modified DESC'
+			),
+			'fields' => array(
+				'Commentary.id', 
+				'Commentary.title', 
+				'Commentary.modified', 
+				'Commentary.slug'
+			),
 			'contain' => false
 		));
 		
@@ -325,12 +383,22 @@ class CommentariesController extends AppController {
 			);
 		}
 		$commentaries = $this->Commentary->find('all', array(
-			'order' => array('Commentary.published_date DESC'),
+			'order' => array(
+				'Commentary.published_date DESC'
+			),
 			'conditions' => $conditions,
-			'fields' => array('Commentary.title', 'Commentary.body', 'Commentary.published_date'),
+			'fields' => array(
+				'Commentary.title', 
+				'Commentary.body', 
+				'Commentary.published_date'
+			),
 			'contain' => array(
-				'Tag' => array('fields' => array('name')),
-				'User' => array('fields' => array('name'))
+				'Tag' => array(
+					'fields' => array('name')
+				),
+				'User' => array(
+					'fields' => array('name')
+				)
 			)
 		));
 		$this->layout = 'ajax';
@@ -355,7 +423,14 @@ class CommentariesController extends AppController {
 				'Commentary.is_published' => 1
 			), 
 			'order' => 'Commentary.published_date ASC',
-			'fields' => array('Commentary.id', 'Commentary.title', 'Commentary.summary', 'Commentary.created', 'Commentary.published_date', 'Commentary.slug')
+			'fields' => array(
+				'Commentary.id', 
+				'Commentary.title', 
+				'Commentary.summary', 
+				'Commentary.created', 
+				'Commentary.published_date', 
+				'Commentary.slug'
+			)
 		));
 		
 		// If an array is being requested by an element
@@ -363,7 +438,13 @@ class CommentariesController extends AppController {
             return $commentaries;
         }
         
-		$this->set(compact('commentaries', 'year', 'latestYear', 'earliestYear', 'title_for_layout'));
+		$this->set(compact(
+			'commentaries', 
+			'earliestYear', 
+			'latestYear', 
+			'title_for_layout',
+			'year'
+		));
 	}
 	
 	public function generate_slugs() {
@@ -377,12 +458,15 @@ class CommentariesController extends AppController {
 				$this->Commentary->create();
 				$this->Commentary->id = $id;
 				$this->Commentary->save(
-					array('id' => $id, 'title' => $title), 
+					compact(
+						'id',
+						'title'
+					), 
 					false,
 					array('slug')
 				);
 			}
-			$this->Flash->set('Created slugs for '.count($commentaries).' commentaries.', 'succes');
+			$this->Flash->succes('Created slugs for '.count($commentaries).' commentaries.');
 		}
 		$this->render('DataCenter.Common/blank');
 	}
