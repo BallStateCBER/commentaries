@@ -33,6 +33,7 @@
 <?php echo $this->element('rich_text_editor_init', array(), array('plugin' => 'DataCenter')); ?>
 
 <?php $this->Js->buffer("
+	echo $this->Html->script('admin.js', array('inline' => false));
 	toggleDelayPublishing();
 	$('.publishing_or_date_setting').change(function (event) {
 		toggleDelayPublishing();
