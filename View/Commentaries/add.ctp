@@ -26,6 +26,13 @@
 			'separator' => '<br />'
 		)
 	); ?>
+	<?php echo $this->Form->input(
+		'alert_media',
+		array(
+			'label' => 'Alert newsmedia to new commentary',
+			'type' => 'checkbox'
+		)
+	); ?>
 </fieldset>
 <?php echo $this->Form->end('Submit'); ?>
 <?php echo $this->element('rich_text_editor_init', array(), array('plugin' => 'DataCenter')); ?>
