@@ -30,11 +30,14 @@
 <?php echo $this->Form->end('Submit'); ?>
 <?php echo $this->element('rich_text_editor_init', array(), array('plugin' => 'DataCenter')); ?>
 
-<?php $this->Js->buffer("
-	toggleDelayPublishing();
-	$('#CommentaryPublishedDateMonth').change(function() {toggleDelayPublishing()});
-	$('#CommentaryPublishedDateDay').change(function() {toggleDelayPublishing()});
-	$('#CommentaryPublishedDateYear').change(function() {toggleDelayPublishing()});
-	$('#CommentaryIsPublished1').change(function() {toggleDelayPublishing()});
-	$('#CommentaryIsPublished0').change(function() {toggleDelayPublishing()});
-"); ?>
+<?php 
+	echo $this->Html->script('admin.js', array('inline' => false));
+	$this->Js->buffer("
+		toggleDelayPublishing();
+		$('#CommentaryPublishedDateMonth').change(function() {toggleDelayPublishing()});
+		$('#CommentaryPublishedDateDay').change(function() {toggleDelayPublishing()});
+		$('#CommentaryPublishedDateYear').change(function() {toggleDelayPublishing()});
+		$('#CommentaryIsPublished1').change(function() {toggleDelayPublishing()});
+		$('#CommentaryIsPublished0').change(function() {toggleDelayPublishing()});
+	");
+?>
