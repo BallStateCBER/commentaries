@@ -48,6 +48,7 @@ class EmailConfig {
 		'sender' => array('commentaries@cberdata.org' => 'Ball State CBER'),
 		'returnPath' => 'commentaries@cberdata.org',
 		'emailFormat' => 'both',
+		'replyTo' => 'cber@bsu.edu'
 		//'charset' => 'utf-8',
 		//'headerCharset' => 'utf-8',
 	);
@@ -57,6 +58,7 @@ class EmailConfig {
 		'from' => array('commentaries@cberdata.org' => 'Ball State CBER'),
 		'sender' => array('commentaries@cberdata.org' => 'Ball State CBER'),
 		'returnPath' => 'commentaries@cberdata.org',
+		'replyTo' => 'cber@bsu.edu',
 		'emailFormat' => 'both',
 		'subject' => 'Mike Hicks Weekly Commentary now available'
 	);
