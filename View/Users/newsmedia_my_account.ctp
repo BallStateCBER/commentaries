@@ -42,13 +42,15 @@
 				array(
 					'label' => 'Password', 
 					'type' => 'password', 
-					'autocomplete' => 'off'
+					'autocomplete' => 'off',
+					'required' => false
 				)
 			);
 			echo $this->Form->input(
 				'confirm_password', 
 				array(
-					'type' => 'password'
+					'type' => 'password',
+					'required' => false
 				)
 			);
 		?>
