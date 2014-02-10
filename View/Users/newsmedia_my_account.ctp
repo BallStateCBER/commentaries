@@ -19,6 +19,19 @@
 
 <fieldset>
 	<legend>
+		Alerts
+	</legend>
+	<?php echo $this->Form->input(
+		'receive_emails',
+		array(
+			'label' => 'Receive email alerts when new commentaries are available',
+			'type' => 'checkbox'
+		)
+	); ?>
+</fieldset>
+
+<fieldset>
+	<legend>
 		Change password
 	</legend>
 	<?php
