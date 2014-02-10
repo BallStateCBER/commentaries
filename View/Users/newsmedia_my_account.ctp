@@ -24,7 +24,7 @@
 			Alerts
 		</legend>
 		<?php echo $this->Form->input(
-			'receive_emails',
+			'nm_email_alerts',
 			array(
 				'label' => 'Receive email alerts when new commentaries are available',
 				'type' => 'checkbox'
