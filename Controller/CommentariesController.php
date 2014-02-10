@@ -487,7 +487,8 @@ class CommentariesController extends AppController {
 		$this->loadModel('User');
 		$newsmedia = $this->User->find('all', array(
 			'conditions' => array(
-				'User.group_id' => 3 // "Newsmedia"
+				'User.group_id' => 3, // "Newsmedia"
+				'User.nm_email_alerts' => 1
 			),
 			'contain' => false,
 			'fields' => array(
