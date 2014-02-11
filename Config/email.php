@@ -63,6 +63,17 @@ class EmailConfig {
 		'subject' => 'Mike Hicks Weekly Commentary now available',
 		'template' => 'newsmedia_alert'
 	);
+	
+	public $newsmedia_intro = array(
+		'transport' => 'Mail',
+		'from' => array('commentaries@cberdata.org' => 'Ball State CBER'),
+		'sender' => array('commentaries@cberdata.org' => 'Ball State CBER'),
+		'returnPath' => 'commentaries@cberdata.org',
+		'replyTo' => 'cber@bsu.edu',
+		'emailFormat' => 'both',
+		'subject' => 'You have been subscribed to the Mike Hicks Weekly Commentary newsmedia alert service',
+		'template' => 'newsmedia_intro'
+	);
 
 	public $smtp = array(
 		'transport' => 'Smtp',
