@@ -22,6 +22,17 @@
 							)
 						); ?>
 					</li>
+					<li>
+						<?php echo $this->Html->link(
+							'Subscribe Another User to Newsmedia Alerts',
+							array(
+								'controller' => 'users', 
+								'action' => 'add_newsmedia', 
+								'admin' => false, 
+								'plugin' => false
+							)
+						); ?>
+					</li>
 				<?php else: ?>
 					<li>
 						<?php echo $this->Html->link(
@@ -107,6 +118,17 @@
 							array(
 								'controller' => 'users', 
 								'action' => 'add', 
+								'admin' => false, 
+								'plugin' => false
+							)
+						); ?>
+					</li>
+					<li>
+						<?php echo $this->Html->link(
+							'Add a Newsmedia Member', 
+							array(
+								'controller' => 'users', 
+								'action' => 'add_newsmedia', 
 								'admin' => false, 
 								'plugin' => false
 							)
