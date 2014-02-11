@@ -157,4 +157,12 @@ class User extends AppModel {
 		$characters = str_shuffle('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789');
 		return substr($characters, 0, 6); 	
 	}
+
+	public function sendNewsmediaIntroEmail($user) {
+		App::uses('CakeEmail', 'Network/Email');
+		$email = new CakeEmail('newsmedia_intro');
+		$email->to($user['User']['email']);
+		$email->viewVars(compact('user'));
+		return $email->send();
+	}
 }
