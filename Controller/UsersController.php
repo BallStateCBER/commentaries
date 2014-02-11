@@ -215,6 +215,47 @@ class UsersController extends AppController {
 			'title_for_layout' => 'My Account'
 		));
 	}
+
+	public function add_newsmedia() {
+		if ($this->request->is('post')) {
+			// Make sure password isn't blank
+			$password = $this->request->data['User']['password'];
+			if ($password === '') {
+				$password = $this->__generatePassword();
+			}
+			
+			$this->User->create($this->request->data);
+			App::uses('Security', 'Utility');
+			$this->User->set(array(
+				'group_id' => 3,
+				'nm_email_alerts' => 1,
+				'password' => Security::hash($password, null, true)
+			));
+			
+			if ($this->User->save()) {
+				$this->Flash->success('Newsmedia member added.');
+				
+				// Clear form
+				$this->request->data = array();
+			} else {
+				$this->Flash->error('There was an error adding the user.');
+			}
+		}
+		
+		// Show a randomly-generated password instead of a blank field
+		if (! isset($this->request->data['User']['password']) || empty($this->request->data['User']['password'])) {
+			$this->request->data['User']['password'] = $this->__generatePassword();
+		}
+		
+		$this->set(array(
+			'title_for_layout' => 'Add Newsmedia Member'
+		));
+	}
+	
+	private function __generatePassword() {
+		$characters = str_shuffle('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789');
+		return substr($characters, 0, 6); 	
+	}
 	
 	// Set up ACL
 	/*
