@@ -223,7 +223,7 @@ class UsersController extends AppController {
 			// Make sure password isn't blank
 			$password = $this->request->data['User']['password'];
 			if ($password === '') {
-				$password = $this->__generatePassword();
+				$password = $this->User->generatePassword();
 			}
 			
 			$this->User->create($this->request->data);
@@ -246,7 +246,7 @@ class UsersController extends AppController {
 		
 		// Show a randomly-generated password instead of a blank field
 		if (! isset($this->request->data['User']['password']) || empty($this->request->data['User']['password'])) {
-			$this->request->data['User']['password'] = $this->__generatePassword();
+			$this->request->data['User']['password'] = $this->User->generatePassword();
 		}
 		
 		if ($this->Auth->user('Group.name') == 'Newsmedia') {
@@ -257,11 +257,6 @@ class UsersController extends AppController {
 		$this->set(array(
 			'title_for_layout' => $title
 		));
-	}
-	
-	private function __generatePassword() {
-		$characters = str_shuffle('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789');
-		return substr($characters, 0, 6); 	
 	}
 	
 	// Set up ACL
