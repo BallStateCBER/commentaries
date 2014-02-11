@@ -249,8 +249,13 @@ class UsersController extends AppController {
 			$this->request->data['User']['password'] = $this->__generatePassword();
 		}
 		
+		if ($this->Auth->user('Group.name') == 'Newsmedia') {
+			$title = 'Add a Reporter to Newsmedia Alerts';
+		} else {
+			$title = 'Add Newsmedia Member';
+		}
 		$this->set(array(
-			'title_for_layout' => 'Add Newsmedia Member'
+			'title_for_layout' => $title
 		));
 	}
 	
