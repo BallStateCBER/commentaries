@@ -220,13 +220,15 @@ class UsersController extends AppController {
 
 	public function add_newsmedia() {
 		if ($this->request->is('post')) {
+			$user = $this->request->data;
+			
 			// Make sure password isn't blank
-			$password = $this->request->data['User']['password'];
+			$password = $user['User']['password'];
 			if ($password === '') {
 				$password = $this->User->generatePassword();
 			}
 			
-			$this->User->create($this->request->data);
+			$this->User->create($user);
 			App::uses('Security', 'Utility');
 			$this->User->set(array(
 				'group_id' => 3,
@@ -236,6 +238,9 @@ class UsersController extends AppController {
 			
 			if ($this->User->save()) {
 				$this->Flash->success('Newsmedia member added.');
+				if (! $this->User->sendNewsmediaIntroEmail($user)) {
+					$this->Flash->error('There was an error sending the introductory email.');
+				}
 				
 				// Clear form
 				$this->request->data = array();
