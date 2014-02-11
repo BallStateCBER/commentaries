@@ -49,16 +49,18 @@ class UsersController extends AppController {
 		if ($this->request->is('post')) {
 			$this->User->create();
 			if ($this->User->save($this->request->data)) {
-				$this->Flash->set(__('The user has been saved. Adding user to AROs table (the permissions system).'), 'success');
-				$this->redirect(array('admin' => true, 'plugin' => 'acl', 'controller' => 'aros', 'action' => 'check', 'run'));
-				//$this->redirect(array('controller' => 'commentaries', 'action' => 'index'));
+				$this->Flash->success('The user has been added.');
+				
+				// Clear form
+				$this->request->data = array();
 			} else {
-				$this->Flash->set(__('The user could not be saved. Please, try again.'), 'error');
+				$this->Flash->error('There was an error adding the user.');
 			}
 		}
-		$groups = $this->User->Group->find('list');
-		$this->set(array('title_for_layout' => 'Add User'));
-		$this->set(compact('groups'));
+		$this->set(array(
+			'groups' => $this->User->Group->find('list'),
+			'title_for_layout' => 'Add User'
+		));
 	}
 
 /**
