@@ -13,6 +13,7 @@ class CommentariesController extends AppController {
 	public function beforeFilter() {
 		parent::beforeFilter();
 		$this->Auth->allow(
+			'alert_newsmedia_test',
 			'autopublish', 
 			'browse', 
 			'export', 
@@ -534,5 +535,13 @@ class CommentariesController extends AppController {
 			$this->Flash->success($success_count.__n(' member', ' members', $success_count).' of the newsmedia alerted.');
 			$this->Flash->error('Error sending newsmedia alerts to the following: '.implode(', ', $error_recipients));
 		}
+	}
+
+	public function alert_newsmedia_test() {
+		$commentary = $this->Commentary->find('first', array(
+	        'order' => array('Commentary.created' => 'desc')
+	    ));
+		$this->__alertNewsmedia($commentary['Commentary']);
+		$this->redirect('/');
 	}
 }
