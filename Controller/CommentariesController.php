@@ -13,7 +13,6 @@ class CommentariesController extends AppController {
 	public function beforeFilter() {
 		parent::beforeFilter();
 		$this->Auth->allow(
-			'alert_newsmedia_test',
 			'autopublish', 
 			'browse', 
 			'export', 
