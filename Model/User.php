@@ -99,7 +99,8 @@ class User extends AppModel {
 
 	public function beforeSave($options = array()) {
 		if (isset($this->data['User']['password'])) {
-        	$this->data['User']['password'] = AuthComponent::password($this->data['User']['password']);
+			App::uses('Security', 'Utility');
+        	$this->data['User']['password'] = Security::hash($this->data['User']['password'], null, true);
 		}
         return true;
     }
