@@ -16,6 +16,6 @@
 		<?php echo $this->element('commentaries/view_commentary'); ?>
 	</div>
 	<?php $this->Js->buffer("
-		$('#next_article_to_publish .time_posted').prepend('Publish on ');
+		$('#next_article_to_publish .time_posted').prepend('Not for release before ');
 	"); ?>
 <?php endif; ?>
