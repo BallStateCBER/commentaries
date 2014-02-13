@@ -10,6 +10,10 @@
 </p>
 
 <p>
+	To stop receiving these alerts, log in to <a href="http://commentaries.cberdata.org/login">http://commentaries.cberdata.org/login</a>, click on "My Account", uncheck the "Receive email alerts" option, and click "Submit".
+</p>
+
+<p>
 	<br />
 	Ball State Center for Business and Economic Research
 	<br />
