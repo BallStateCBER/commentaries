@@ -49,6 +49,6 @@
 </div>
 <?php if (! $this->Session->check('Auth.User')): ?>
 	<div>
-		<?php echo $this->Html->link('User login', array('controller' => 'users', 'action' => 'login', 'admin' => false, 'plugin' => false)); ?>
+		<?php echo $this->Html->link('Reporter / Admin Login', array('controller' => 'users', 'action' => 'login', 'admin' => false, 'plugin' => false)); ?>
 	</div>
 <?php endif; ?>
