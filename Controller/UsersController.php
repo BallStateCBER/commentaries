@@ -233,7 +233,7 @@ class UsersController extends AppController {
 			$this->User->set(array(
 				'group_id' => 3,
 				'nm_email_alerts' => 1,
-				'password' => Security::hash($password, null, true)
+				'password' => $password
 			));
 			
 			if ($this->User->save()) {
