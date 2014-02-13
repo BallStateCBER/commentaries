@@ -1,4 +1,4 @@
-<?php if ($this->Session->check('Auth.User')): ?>
+<?php if (! empty($auth_user)): ?>
 	<div>
 		<?php echo $this->element('users/user_menu'); ?>
 	</div>
@@ -70,7 +70,7 @@
 	</div>
 </div>
 
-<?php if (! $this->Session->check('Auth.User')): ?>
+<?php if (empty($auth_user)): ?>
 	<div>
 		<?php echo $this->Html->link(
 			'Reporter / Admin Login', 
