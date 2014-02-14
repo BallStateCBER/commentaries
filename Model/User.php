@@ -168,7 +168,7 @@ class User extends AppModel {
 	}
 	
 	public function getUserIdWithEmail($email) {
-		$result = $this->User->find('first', array(
+		$result = $this->find('first', array(
 			'conditions' => array(
 				'User.email' => $email
 			), 
