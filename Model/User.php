@@ -166,4 +166,20 @@ class User extends AppModel {
 		$email->viewVars(compact('user'));
 		return $email->send();
 	}
+	
+	public function getUserIdWithEmail($email) {
+		$result = $this->User->find('first', array(
+			'conditions' => array(
+				'User.email' => $email
+			), 
+			'fields' => array(
+				'User.id'
+			),
+			'contains' => false
+		));
+		if ($result) {
+			return $result['User']['id'];
+		}
+		return false;
+	}
 }
