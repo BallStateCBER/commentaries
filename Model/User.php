@@ -182,4 +182,10 @@ class User extends AppModel {
 		}
 		return false;
 	}
+	
+	public function cleanEmail($email) {
+		$email = trim($email);
+		$email = strtolower($email);
+		return $email;
+	}
 }
