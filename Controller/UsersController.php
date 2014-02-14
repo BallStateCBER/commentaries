@@ -185,13 +185,21 @@ class UsersController extends AppController {
 
 	public function newsmedia_my_account() {
 		$this->User->id = $this->Auth->user('id');
-		if ($this->request->is('post')) {
+		if ($this->request->is('post') || $this->request->is('put')) {
 			$data = $this->request->data['User'];
 			
 			if ($data['new_password'] == '') {
 				// Unset both fields so they don't go through validation
 				unset($this->request->data['User']['new_password']);
 				unset($this->request->data['User']['confirm_password']);
+			}
+			
+			// Invalidate email only if it changes to another user's email  
+			unset($this->User->validate['email']['emailUnclaimed']);
+			$data['email'] = $this->User->cleanEmail($data['email']);
+			$email_lookup = $this->User->getUserIdWithEmail($data['email']);
+			if ($email_lookup && $email_lookup !== $this->User->id) {
+				$this->User->validationErrors['email'] = 'Sorry, another account is already using that email address.';
 			}
 			
 			$this->User->set($data);
@@ -205,13 +213,13 @@ class UsersController extends AppController {
 				} else {
 					$this->Flash->error('There was an error updating your information.');
 				}
-			}
+			} else { $this->Flash->dump($this->User->validationErrors); }
 			
 			// Unset passwords so those fields aren't auto-populated
 			unset($this->request->data['User']['new_password']);
 			unset($this->request->data['User']['confirm_password']);
 		} else {
-			$this->request->data = $this->User->read();
+			$this->request->data = $this->User->read(); $this->Flash->set('No data received');
 		}
 		$this->set(array(
 			'title_for_layout' => 'My Account'
