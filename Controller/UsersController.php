@@ -204,7 +204,6 @@ class UsersController extends AppController {
 			
 			$this->User->set($data);
 			if ($this->User->validates()) {
-				App::uses('Security', 'Utility');
 				if ($data['new_password'] != '') {
 					$this->User->set('password', $data['new_password']);
 				}
