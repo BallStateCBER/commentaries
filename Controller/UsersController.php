@@ -206,7 +206,6 @@ class UsersController extends AppController {
 			if ($this->User->validates()) {
 				App::uses('Security', 'Utility');
 				$this->User->set('password', $data['new_password']);
-				$this->User->set('email', strtolower(trim($data['email'])));
 				
 				if ($this->User->save()) {
 					$this->Flash->success('Your information has been updated.');
