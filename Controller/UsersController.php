@@ -189,9 +189,9 @@ class UsersController extends AppController {
 			$data = $this->request->data['User'];
 			
 			if ($data['new_password'] == '') {
-				// Unset both fields so they don't go through validation
-				unset($this->request->data['User']['new_password']);
-				unset($this->request->data['User']['confirm_password']);
+				// Remove validation for both fields
+				unset($this->User->validate['new_password']);
+				unset($this->User->validate['confirm_password']);
 			}
 			
 			// Invalidate email only if it changes to another user's email  
@@ -205,10 +205,16 @@ class UsersController extends AppController {
 			$this->User->set($data);
 			if ($this->User->validates()) {
 				App::uses('Security', 'Utility');
-				$this->User->set('password', $data['new_password']);
+				if ($data['new_password'] != '') {
+					$this->User->set('password', $data['new_password']);
+				}
 				
 				if ($this->User->save()) {
-					$this->Flash->success('Your information has been updated.');
+					$message = 'Your information has been updated';
+					if ($data['new_password'] != '') {
+						$message .= ' and password changed';
+					}
+					$this->Flash->success($message.'.');
 				} else {
 					$this->Flash->error('There was an error updating your information.');
 				}
