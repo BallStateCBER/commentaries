@@ -212,7 +212,7 @@ class UsersController extends AppController {
 				} else {
 					$this->Flash->error('There was an error updating your information.');
 				}
-			} else { $this->Flash->dump($this->User->validationErrors); }
+			}
 			
 			// Unset passwords so those fields aren't auto-populated
 			unset($this->request->data['User']['new_password']);
