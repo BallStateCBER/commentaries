@@ -218,7 +218,7 @@ class UsersController extends AppController {
 			unset($this->request->data['User']['new_password']);
 			unset($this->request->data['User']['confirm_password']);
 		} else {
-			$this->request->data = $this->User->read(); $this->Flash->set('No data received');
+			$this->request->data = $this->User->read();
 		}
 		$this->set(array(
 			'title_for_layout' => 'My Account'
