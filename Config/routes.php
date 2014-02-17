@@ -53,6 +53,7 @@ Router::connect('/index', 		array('controller' => 'commentaries', 'action' => 'r
 
 Router::connect('/newsmedia', 	array('controller' => 'commentaries', 'action' => 'index', 'newsmedia' => true));
 Router::connect('/newsmedia/subscribe', array('controller' => 'users', 'action' => 'add_newsmedia'));
+Router::connect('/newsmedia/my_account', array('controller' => 'users', 'action' => 'my_account', 'newsmedia' => true));
 
 CakePlugin::routes();
 require CAKE . 'Config' . DS . 'routes.php';
