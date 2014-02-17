@@ -117,7 +117,7 @@ class UsersController extends AppController {
 			    $this->Permissions->storePermissions($user['group_id']);
 	            $this->redirect($this->Auth->redirect());
 	        } else {
-	            $this->Flash->set('Your email address or password was incorrect.', 'error');
+	        	$this->User->invalidate('email', 'Your email address or password was incorrect.');
 	        }
 	    }
 	    $this->set('title_for_layout', 'Login');
