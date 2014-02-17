@@ -118,6 +118,7 @@ class UsersController extends AppController {
 	            $this->redirect($this->Auth->redirect());
 	        } else {
 	        	$this->User->invalidate('email', 'Your email address or password was incorrect.');
+				unset($this->request->data['User']['password']);
 	        }
 	    }
 	    $this->set('title_for_layout', 'Login');
