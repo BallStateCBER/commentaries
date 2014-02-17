@@ -24,6 +24,18 @@
 					</li>
 					<li>
 						<?php echo $this->Html->link(
+							'My Account', 
+							array(
+								'controller' => 'users', 
+								'action' => 'my_account', 
+								'admin' => false,
+								'newsmedia' => true, 
+								'plugin' => false
+							)
+						); ?>
+					</li>
+					<li>
+						<?php echo $this->Html->link(
 							'Subscribe Another User to Newsmedia Alerts',
 							array(
 								'controller' => 'users', 
