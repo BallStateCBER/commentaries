@@ -187,6 +187,7 @@ class UsersController extends AppController {
 		$this->User->id = $this->Auth->user('id');
 		if ($this->request->is('post') || $this->request->is('put')) {
 			$data = $this->request->data['User'];
+			$this->User->set($data);
 			
 			if ($data['new_password'] == '') {
 				// Remove validation for both fields
@@ -199,10 +200,9 @@ class UsersController extends AppController {
 			$data['email'] = $this->User->cleanEmail($data['email']);
 			$email_lookup = $this->User->getUserIdWithEmail($data['email']);
 			if ($email_lookup && $email_lookup !== $this->User->id) {
-				$this->User->validationErrors['email'] = 'Sorry, another account is already using that email address.';
+				$this->User->invalidate('email', 'Sorry, another account is already using that email address.');
 			}
 			
-			$this->User->set($data);
 			if ($this->User->validates()) {
 				if ($data['new_password'] != '') {
 					$this->User->set('password', $data['new_password']);
