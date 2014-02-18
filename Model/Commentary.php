@@ -39,7 +39,7 @@ class Commentary extends AppModel {
 		'body' => array(
 			'notempty' => array(
 				'rule' => array('notempty'),
-				'message' => 'Your invisible commentary will only confuse people',
+				'message' => 'Commentary body cannot be left blank',
 				//'allowEmpty' => false,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule
