@@ -7,9 +7,15 @@
 	
 	<fieldset>
 		<legend>
-			Update Contact Info
+			Update Info
 		</legend>
 		<?php
+			echo $this->Form->input(
+				'name', 
+				array(
+					'label' => 'Name'
+				)
+			);
 			echo $this->Form->input(
 				'email', 
 				array(
