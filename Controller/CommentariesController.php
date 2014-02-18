@@ -93,7 +93,8 @@ class CommentariesController extends AppController {
 						$this->__exportToIceMiller();
 					}
 					if ($this->request->data['Commentary']['alert_media']) {
-						$this->__alertNewsmedia($this->request->data['Commentary']);
+						$saved_data = $this->Commentary->read();
+						$this->__alertNewsmedia($saved_data['Commentary']);
 					}
 					$this->redirect(array(
 						'controller' => 'commentaries', 
