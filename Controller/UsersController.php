@@ -208,8 +208,13 @@ class UsersController extends AppController {
 				if ($data['new_password'] != '') {
 					$this->User->set('password', $data['new_password']);
 				}
-				
-				if ($this->User->save()) {
+				$saved = $this->User->save(null, true, array(
+					'name',
+					'email',
+					'password',
+					'nm_email_alerts'
+				));
+				if ($saved) {
 					$message = 'Your information has been updated';
 					if ($data['new_password'] != '') {
 						$message .= ' and password changed';
