@@ -27,12 +27,8 @@ class User extends AppModel {
 		'name' => array(
 			'notEmpty' => array(
 				'rule' => 'notEmpty',
-				'message' => 'Please enter your full name.',
+				'message' => 'Please enter your name.',
 				'last' => true
-			),
-			'isUnique' => array(
-				'rule' => '_isUnique',
-				'message' => 'Sorry, there is already an account with that name. If you have the misfortune of having a common name, try using your middle initial or full middle name.'
 			)
 		),
 		'new_password' => array(
