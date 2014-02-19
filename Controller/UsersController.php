@@ -246,6 +246,8 @@ class UsersController extends AppController {
 				$password = $this->User->generatePassword();
 			}
 			
+			$user['User']['email'] = $this->User->cleanEmail($user['User']['email']);
+			
 			$this->User->create($user);
 			App::uses('Security', 'Utility');
 			$this->User->set(array(
