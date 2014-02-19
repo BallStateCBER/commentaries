@@ -151,7 +151,7 @@ class User extends AppModel {
 	}
 	
 	public function generatePassword() {
-		$characters = str_shuffle('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789');
+		$characters = str_shuffle('abcdefghijkmnopqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ23456789');
 		return substr($characters, 0, 6); 	
 	}
 
