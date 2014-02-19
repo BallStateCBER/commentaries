@@ -107,11 +107,19 @@ class Tag extends AppModel {
 	);
 
 	public function getIdFromName($name) {
+		$name = trim($name);
+		$name = strtolower($name);
 		$result = $this->find('list', array(
-			'conditions' => array('name' => trim(strtolower($name))),
+			'conditions' => array(
+				'name' => $name
+			),
 			'limit' => 1
 		));
-		return empty($result) ? false : reset(array_keys($result));
+		if (empty($result)) {
+			return false;
+		}
+		$result = array_keys($result);
+		return reset($result);
 	}
 	
 	/**
