@@ -31,9 +31,8 @@
 </fieldset>
 <?php echo $this->Form->end('Submit'); ?>
 <?php echo $this->element('rich_text_editor_init', array(), array('plugin' => 'DataCenter')); ?>
-
+<?php echo $this->Html->script('admin.js', array('inline' => false)); ?>
 <?php $this->Js->buffer("
-	echo $this->Html->script('admin.js', array('inline' => false));
 	toggleDelayPublishing();
 	$('.publishing_or_date_setting').change(function (event) {
 		toggleDelayPublishing();
