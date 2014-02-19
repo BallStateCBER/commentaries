@@ -247,7 +247,6 @@ class UsersController extends AppController {
 			}
 			
 			$this->User->create($user);
-			App::uses('Security', 'Utility');
 			$this->User->set(array(
 				'group_id' => 3,
 				'nm_email_alerts' => 1,
