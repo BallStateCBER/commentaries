@@ -246,14 +246,13 @@ class UsersController extends AppController {
 				$password = $this->User->generatePassword();
 			}
 			
-			$user['User']['email'] = $this->User->cleanEmail($user['User']['email']);
-			
 			$this->User->create($user);
 			App::uses('Security', 'Utility');
 			$this->User->set(array(
 				'group_id' => 3,
 				'nm_email_alerts' => 1,
-				'password' => $password
+				'password' => $password,
+				'email' => $this->User->cleanEmail($user['User']['email'])
 			));
 			
 			if ($this->User->save()) {
