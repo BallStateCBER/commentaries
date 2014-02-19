@@ -165,6 +165,7 @@ class Commentary extends AppModel {
 		return $this->find('first', array(
 			'conditions' => array(
 				'Commentary.is_published' => 0,
+				'Commentary.delay_publishing' => 1,
 				'Commentary.published_date >' => date('Y-m-d').' 00:00:00'
 			),
 			'order' => array(
