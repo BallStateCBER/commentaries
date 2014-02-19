@@ -12,7 +12,8 @@ class UsersController extends AppController {
 	    parent::beforeFilter();
 		$this->Auth->allow(
 			'login',
-			'logout'
+			'logout',
+			'clean_emails'
 		);
 	}
 
@@ -282,6 +283,32 @@ class UsersController extends AppController {
 		));
 	}
 	
+	/**
+	 * Processes all user email addresses with User::cleanEmail()
+	 */
+	public function clean_emails() {
+		$users = $this->User->find('list', array(
+			'fields' => array(
+				'User.id',
+				'User.email'
+			)
+		));
+		$cleaned_count = 0;
+		foreach ($users as $user_id => $email) {
+			$clean_email = $this->User->cleanEmail($email);
+			if ($email != $clean_email) {
+				$this->User->id = $user_id;
+				$this->User->saveField('email', $clean_email);
+				$this->Flash->success('Cleaned: '.$email.' (#'.$user_id.')');
+				$cleaned_count++;
+			}
+		}
+		if (! $cleaned_count) {
+			$this->Flash->set('No email addresses need cleaned');
+		}
+		$this->redirect('/');
+	}
+ 
 	// Set up ACL
 	/*
 	public function initDB() {
