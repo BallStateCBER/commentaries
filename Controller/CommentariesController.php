@@ -489,7 +489,10 @@ class CommentariesController extends AppController {
 		$newsmedia = $this->User->find('all', array(
 			'conditions' => array(
 				'User.group_id' => 3, // "Newsmedia"
-				'User.nm_email_alerts' => 1
+				'User.nm_email_alerts' => 1,
+				'NOT' => array(
+					'User.last_alert_article_id' => $commentary['id']
+				)
 			),
 			'contain' => false,
 			'fields' => array(
@@ -498,7 +501,7 @@ class CommentariesController extends AppController {
 			)
 		));
 		if (empty($newsmedia)) {
-			$this->Flash->set('Newsmedia not alerted. None are currently in the database.');
+			$this->Flash->set('Newsmedia not alerted. No applicable members (opted in to alerts and not yet alerted) found in database.');
 			return;	
 		}
 		
