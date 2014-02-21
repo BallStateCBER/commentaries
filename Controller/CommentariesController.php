@@ -525,7 +525,10 @@ class CommentariesController extends AppController {
 				),
 				'date' => date('l, F jS', strtotime($commentary['published_date']))
 			));
-			if (! $email->send()) {
+			if ($email->send()) {
+				$this->User->id = $user['User']['id'];
+				$this->User->saveField('last_alert_article_id', $commentary['id']);
+			} else {
 				$error_recipients[] = $recipient_email;
 			}
 		}
