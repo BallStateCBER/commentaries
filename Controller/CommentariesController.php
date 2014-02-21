@@ -486,6 +486,13 @@ class CommentariesController extends AppController {
 	}
 	
 	private function __alertNewsmedia($commentary) {
+		if (empty($commentary)) {
+			$this->Flash->set('No commentary available to alert newsmedia to.');
+		}
+		if (isset($commentary['Commentary'])) {
+			$commentary = $commentary['Commentary'];
+		}
+		
 		$this->loadModel('User');
 		$newsmedia = $this->User->find('all', array(
 			'conditions' => array(
