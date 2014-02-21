@@ -98,9 +98,15 @@
 	echo $this->Html->script('admin.js', array('inline' => false));
 	$this->Js->buffer("
 		toggleDelayPublishing();
-		$('#CommentaryPublishedDateMonth').change(function() {toggleDelayPublishing()});
-		$('#CommentaryPublishedDateDay').change(function() {toggleDelayPublishing()});
-		$('#CommentaryPublishedDateYear').change(function() {toggleDelayPublishing()});
-		$('#CommentaryIsPublished1').change(function() {toggleDelayPublishing()});
-		$('#CommentaryIsPublished0').change(function() {toggleDelayPublishing()});
+		var input_ids = [
+			'#CommentaryPublishedDateMonth',
+			'#CommentaryPublishedDateDay',
+			'#CommentaryPublishedDateYear',
+			'#CommentaryIsPublished1',
+			'#CommentaryIsPublished0'
+		];
+		var selector = input_ids.join(', ');
+		$(selector).change(function() {
+			toggleDelayPublishing();
+		});
 	");
