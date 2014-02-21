@@ -19,7 +19,8 @@ class CommentariesController extends AppController {
 			'generate_slugs', 
 			'index', 
 			'newsmedia_index',
-			'rss', 
+			'rss',
+			'send_timed_alert', 
 			'tagged', 
 			'tags', 
 			'view'
@@ -541,5 +542,20 @@ class CommentariesController extends AppController {
 			$this->Flash->success($success_count.__n(' member', ' members', $success_count).' of the newsmedia alerted.');
 			$this->Flash->error('Error sending newsmedia alerts to the following: '.implode(', ', $error_recipients));
 		}
+	}
+
+	public function send_timed_alert($cron_job_password) {
+		if ($cron_job_password == Configure::read('cron_job_password')) {
+			$commentary = $this->Commentary->getNextForNewsmedia();
+			if ($this->__alertNewsmedia($commentary)) {
+				echo 'Success';
+			} else {
+				echo 'Error';
+			}
+		} else {
+			echo 'Password incorrect';
+		}
+		$this->layout = 'DataCenter.blank';
+		$this->render('DataCenter.Common/blank');
 	}
 }
