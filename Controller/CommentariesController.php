@@ -542,12 +542,4 @@ class CommentariesController extends AppController {
 			$this->Flash->error('Error sending newsmedia alerts to the following: '.implode(', ', $error_recipients));
 		}
 	}
-
-	public function alert_newsmedia_test() {
-		$commentary = $this->Commentary->find('first', array(
-	        'order' => array('Commentary.created' => 'desc')
-	    ));
-		$this->__alertNewsmedia($commentary['Commentary']);
-		$this->redirect('/');
-	}
 }
