@@ -11,7 +11,7 @@ class User extends AppModel {
 	public $name = 'User';
     public $actsAs = array(
     	'Acl' => array(
-	    	'type' => 'both',
+	    	'type' => 'requester',
 	    	
 	    	// Necessary to prevent error messages while using $this->save() http://cakephp.1045679.n5.nabble.com/ACL-is-not-working-for-groups-td4953074.html 
 	    	'enabled' => false

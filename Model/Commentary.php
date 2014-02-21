@@ -8,9 +8,6 @@ App::uses('AppModel', 'Model');
  */
 class Commentary extends AppModel {
 	public $actsAs = array(
-		'Acl' => array(
-			'type' => 'controlled'
-		),
 		'Containable',
 		'Sluggable.Sluggable' => array(
 			'label' => 'title',

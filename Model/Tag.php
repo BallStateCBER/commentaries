@@ -9,9 +9,6 @@ App::uses('AppModel', 'Model');
  */
 class Tag extends AppModel {
 	public $actsAs = array(
-		'Acl' => array(
-			'type' => 'controlled'
-		),
 		'Containable', 
 		'Tree'
 	);
