@@ -237,6 +237,19 @@ class UsersController extends AppController {
 	}
 
 	public function add_newsmedia() {
+		/* Set information about the next commentary to be published 
+		 * if alerts have already been sent out for it and this user 
+		 * needs to be caught up. */
+		$this->loadModel('Commentary');
+		$next_commentary = $this->Commentary->getNextForNewsmedia();
+		if (! empty($next_commentary)) {
+			$commentary_id = $next_commentary['Commentary']['id'];
+			$alerts_sent = $this->Commentary->isMostRecentAlert($commentary_id);
+			if ($alerts_sent) {
+				$this->set(compact('next_commentary'));
+			}
+		}
+		
 		if ($this->request->is('post')) {
 			$user = $this->request->data;
 			
@@ -256,8 +269,15 @@ class UsersController extends AppController {
 			
 			if ($this->User->save()) {
 				$this->Flash->success('Newsmedia member added.');
+				
 				if (! $this->User->sendNewsmediaIntroEmail($user)) {
 					$this->Flash->error('There was an error sending the introductory email.');
+				}
+				
+				if ($user['User']['send_alert'] && ! empty($next_commentary)) {
+					if (! $this->User->sendNewsmediaAlertEmail($user, $next_commentary)) {
+						$this->Flash->error('There was an error sending an alert message for the article "'.$next_commentary['Commentary']['title'].'".');
+					}
 				}
 				
 				// Clear form
@@ -272,19 +292,6 @@ class UsersController extends AppController {
 		// Show a randomly-generated password instead of a blank field
 		if (! isset($this->request->data['User']['password']) || empty($this->request->data['User']['password'])) {
 			$this->request->data['User']['password'] = $this->User->generatePassword();
-		}
-		
-		/* Set information about the next commentary to be published 
-		 * if alerts have already been sent out for it and this user 
-		 * needs to be caught up. */
-		$this->loadModel('Commentary');
-		$next_commentary = $this->Commentary->getNextForNewsmedia();
-		if (! empty($next_commentary)) {
-			$commentary_id = $next_commentary['Commentary']['id'];
-			$alerts_sent = $this->Commentary->isMostRecentAlert($commentary_id);
-			if ($alerts_sent) {
-				$this->set(compact('next_commentary'));
-			}
 		}
 		
 		if ($this->Auth->user('Group.name') == 'Newsmedia') {
