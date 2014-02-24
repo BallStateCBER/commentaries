@@ -5,13 +5,13 @@
 <p>
 	You have been subscribed to the newsmedia alert service for Mike Hicks's Weekly Commentaries. 
 	Every Wednesday at approximately 2:00pm EST, we will send you an email alert containing a link to the next commentary due to be published.
-	Also, you can visit <a href="http://commentaries.cberdata.org/newsmedia">http://commentaries.cberdata.org/newsmedia</a>
+	Also, you can visit <a href="<?php echo $newsmedia_index_url; ?>"><?php echo $newsmedia_index_url; ?></a>
 	at any time to view the next commentary to publish, if it's available.
 </p>
 
 <p>
 	You can now log in to the Weekly Commentary website at 
-	<a href="http://commentaries.cberdata.org/login">http://commentaries.cberdata.org/login</a> 
+	<a href="<?php echo $login_url; ?>"><?php echo $login_url; ?></a> 
 	using the following information.
 </p>
 <ul>

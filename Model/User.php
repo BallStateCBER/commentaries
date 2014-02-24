@@ -159,7 +159,26 @@ class User extends AppModel {
 		App::uses('CakeEmail', 'Network/Email');
 		$email = new CakeEmail('newsmedia_intro');
 		$email->to($user['User']['email']);
-		$email->viewVars(compact('user'));
+		$newsmedia_index_url = Router::url(
+			array(
+				'controller' => 'commentaries',
+				'action' => 'index',
+				'newsmedia' => true
+			),
+			true
+		);
+		$login_url = Router::url(
+			array(
+				'controller' => 'users',
+				'action' => 'login'
+			),
+			true
+		);
+		$email->viewVars(compact(
+			'user',
+			'newsmedia_index_url',
+			'login_url'
+		));
 		return $email->send();
 	}
 	
