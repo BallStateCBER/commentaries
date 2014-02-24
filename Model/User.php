@@ -184,6 +184,38 @@ class User extends AppModel {
 		return $email->send();
 	}
 	
+	public function sendNewsmediaAlertEmail($user, $commentary) {
+		if (isset($commentary['Commentary'])) {
+			$commentary = $commentary['Commentary'];
+		}
+		
+		App::uses('CakeEmail', 'Network/Email');
+		$email = new CakeEmail('newsmedia_alert');
+		$recipient_email = $user['User']['email'];
+		$email->to($recipient_email);
+		$timestamp = strtotime($commentary['published_date']);
+		$email->viewVars(array(
+			'commentary' => $commentary,
+			'recipient_name' => $user['User']['name'],
+			'url' => Router::url(
+				array(
+					'controller' => 'commentaries',
+					'action' => 'view',
+					'id' => $commentary['id'],
+					'slug' =>  $commentary['slug']
+				),
+				true
+			),
+			'date' => date('l, F jS', $timestamp)
+		));
+		if ($email->send()) {
+			$this->id = $user['User']['id'];
+			$this->saveField('last_alert_article_id', $commentary['id']);
+			return true;
+		}
+		return false;
+	}	
+	
 	public function getUserIdWithEmail($email) {
 		$result = $this->find('first', array(
 			'conditions' => array(
