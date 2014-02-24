@@ -511,7 +511,7 @@ class CommentariesController extends AppController {
 		
 		$error_recipients = array();
 		foreach ($newsmedia as $user) {
-			if (! $this->User->sendNewsmediaAlertEmail()) {
+			if (! $this->User->sendNewsmediaAlertEmail($user, $commentary)) {
 				$error_recipients[] = $user['User']['email'];
 			}
 		}
