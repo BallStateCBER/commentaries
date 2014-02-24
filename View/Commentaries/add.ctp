@@ -77,13 +77,6 @@
 				'separator' => '<br />'
 			)
 		);
-		echo $this->Form->input(
-			'alert_media',
-			array(
-				'label' => 'Alert newsmedia to new commentary',
-				'type' => 'checkbox'
-			)
-		);
 	?>
 </fieldset>
 <?php 
