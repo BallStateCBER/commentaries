@@ -265,11 +265,26 @@ class UsersController extends AppController {
 			} else {
 				$this->Flash->error('There was an error adding the user.');
 			}
+		} else {
+			$this->request->data['User']['send_alert'] = true;
 		}
 		
 		// Show a randomly-generated password instead of a blank field
 		if (! isset($this->request->data['User']['password']) || empty($this->request->data['User']['password'])) {
 			$this->request->data['User']['password'] = $this->User->generatePassword();
+		}
+		
+		/* Set information about the next commentary to be published 
+		 * if alerts have already been sent out for it and this user 
+		 * needs to be caught up. */
+		$this->loadModel('Commentary');
+		$next_commentary = $this->Commentary->getNextForNewsmedia();
+		if (! empty($next_commentary)) {
+			$commentary_id = $next_commentary['Commentary']['id'];
+			$alerts_sent = $this->Commentary->isMostRecentAlert($commentary_id);
+			if ($alerts_sent) {
+				$this->set(compact('next_commentary'));
+			}
 		}
 		
 		if ($this->Auth->user('Group.name') == 'Newsmedia') {
