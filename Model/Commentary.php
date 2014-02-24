@@ -174,4 +174,21 @@ class Commentary extends AppModel {
 	public function parentNode() {
 		return null;
 	}
+	
+	/**
+	 * Returns TRUE if the specified commentary matches any User.last_alert_article_id field, FALSE otherwise
+	 * @param int $commentary_id
+	 * @return boolean 
+	 */
+	public function isMostRecentAlert($commentary_id) {
+		if (empty($commentary_id)) {
+			return false;
+		}
+		$result = $this->User->find('count', array(
+			'conditions' => array(
+				'User.last_alert_article_id' => $commentary_id
+			)
+		));
+		return $result > 0;
+	}
 }
