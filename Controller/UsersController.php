@@ -274,7 +274,7 @@ class UsersController extends AppController {
 					$this->Flash->error('There was an error sending the introductory email.');
 				}
 				
-				if ($user['User']['send_alert'] && ! empty($next_commentary)) {
+				if ($user['User']['send_alert'] && ! empty($next_commentary) && $alerts_sent) {
 					if (! $this->User->sendNewsmediaAlertEmail($user, $next_commentary)) {
 						$this->Flash->error('There was an error sending an alert message for the article "'.$next_commentary['Commentary']['title'].'".');
 					}
