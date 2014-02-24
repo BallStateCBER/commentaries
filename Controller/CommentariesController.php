@@ -509,31 +509,10 @@ class CommentariesController extends AppController {
 			return;	
 		}
 		
-		App::uses('CakeEmail', 'Network/Email');
-		$email = new CakeEmail('newsmedia_alert');
 		$error_recipients = array();
 		foreach ($newsmedia as $user) {
-			$recipient_email = $user['User']['email'];
-			$email->to($recipient_email);
-			$email->viewVars(array(
-				'commentary' => $commentary,
-				'recipient_name' => $user['User']['name'],
-				'url' => Router::url(
-					array(
-						'controller' => 'commentaries',
-						'action' => 'view',
-						'id' => $commentary['id'],
-						'slug' =>  $commentary['slug']
-					),
-					true
-				),
-				'date' => date('l, F jS', strtotime($commentary['published_date']))
-			));
-			if ($email->send()) {
-				$this->User->id = $user['User']['id'];
-				$this->User->saveField('last_alert_article_id', $commentary['id']);
-			} else {
-				$error_recipients[] = $recipient_email;
+			if (! $this->User->sendNewsmediaAlertEmail()) {
+				$error_recipients[] = $user['User']['email'];
 			}
 		}
 		if (empty($error_recipients)) {
