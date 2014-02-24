@@ -132,8 +132,10 @@ class User extends AppModel {
     }
     
 	public function _isUnique($check) {
-		$value = array_pop(array_values($check));
-		$field = array_pop(array_keys($check));
+		$values = array_values($check);
+		$value = array_pop($values);
+		$fields = array_keys($check);
+		$field = array_pop($fields);
 		if ($field == 'email') {
 			$value == strtolower($value);
 		}
