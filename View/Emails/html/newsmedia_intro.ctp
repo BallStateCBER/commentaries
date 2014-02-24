@@ -4,7 +4,7 @@
 
 <p>
 	You have been subscribed to the newsmedia alert service for Mike Hicks's Weekly Commentaries. 
-	As soon as each week's commentary is available, you will receive an email alert containing a link to it.
+	Every Wednesday at approximately 2:00pm EST, we will send you an email alert containing a link to the next commentary due to be published.
 	Also, you can visit <a href="http://commentaries.cberdata.org/newsmedia">http://commentaries.cberdata.org/newsmedia</a>
 	at any time to view the next commentary to publish, if it's available.
 </p>
