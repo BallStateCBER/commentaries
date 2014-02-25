@@ -75,6 +75,17 @@ class EmailConfig {
 		'template' => 'newsmedia_intro'
 	);
 
+	public $reset_password = array(
+		'transport' => 'Mail',
+		'from' => array('commentaries@cberdata.org' => 'Ball State CBER'),
+		'sender' => array('commentaries@cberdata.org' => 'Ball State CBER'),
+		'returnPath' => 'commentaries@cberdata.org',
+		'replyTo' => 'cber@bsu.edu',
+		'emailFormat' => 'both',
+		'subject' => 'Mike Hicks Weekly Commentary: Reset password',
+		'template' => 'reset_password'
+	);
+
 	public $smtp = array(
 		'transport' => 'Smtp',
 		'from' => array('site@localhost' => 'My Site'),
