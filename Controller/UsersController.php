@@ -269,6 +269,7 @@ class UsersController extends AppController {
 			
 			if ($this->User->save()) {
 				$this->Flash->success('Newsmedia member added.');
+				$user['User']['id'] = $this->User->id;
 				
 				if (! $this->User->sendNewsmediaIntroEmail($user)) {
 					$this->Flash->error('There was an error sending the introductory email.');
