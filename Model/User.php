@@ -257,4 +257,10 @@ class User extends AppModel {
 		));
 		return $email->send();
 	}
+	
+	public function getResetPasswordHash($user_id, $email = null) {
+		$salt = 'PywIYCSLkQ';
+		$month = date('my');
+		return md5($user_id.$email.$salt.$month);	
+	}
 }
