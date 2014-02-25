@@ -529,15 +529,10 @@ class CommentariesController extends AppController {
 	public function send_timed_alert($cron_job_password) {
 		if ($cron_job_password == Configure::read('cron_job_password')) {
 			$commentary = $this->Commentary->getNextForNewsmedia();
-			if ($this->__alertNewsmedia($commentary)) {
-				echo 'Success';
-			} else {
-				echo 'Error';
-			}
+			$this->__alertNewsmedia($commentary);
 		} else {
-			echo 'Password incorrect';
+			$this->Flash->error('Password incorrect');
 		}
-		$this->layout = 'DataCenter.blank';
 		$this->render('DataCenter.Common/blank');
 	}
 }
