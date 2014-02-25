@@ -237,4 +237,24 @@ class User extends AppModel {
 		$email = strtolower($email);
 		return $email;
 	}
+	
+	public function sendPasswordResetEmail($user_id, $to_address) {
+		$this->id = $user_id;
+		$reset_password_hash = $this->getResetPasswordHash($user_id, $to_address);
+		$reset_url = Router::url(array(
+			'controller' => 'users',
+			'action' => 'reset_password',
+			$user_id,
+			$reset_password_hash
+		), true);
+		
+		App::uses('CakeEmail', 'Network/Email');
+		$email = new CakeEmail('default');
+		$email->to($to_address);
+		$email->viewVars(array(
+			'name' => $this->field('name'),
+			'reset_url' => $reset_url
+		));
+		return $email->send();
+	}
 }
