@@ -283,6 +283,7 @@ class UsersController extends AppController {
 				
 				// Clear form
 				$this->request->data = array();
+				$this->request->data['User']['send_alert'] = true;
 			} else {
 				$this->Flash->error('There was an error adding the user.');
 			}
