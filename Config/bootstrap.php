@@ -156,3 +156,5 @@ CakeLog::config('error', array(
     'types' => array('warning', 'error', 'critical', 'alert', 'emergency'),
     'file' => 'error',
 ));
+
+Configure::write('admin_email', 'gtwatson@bsu.edu');
