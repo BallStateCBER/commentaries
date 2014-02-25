@@ -140,7 +140,7 @@ class CommentariesController extends AppController {
 			$this->redirect($this->referer());
 		}
 		$this->Commentary->id = $id;
-		if ($this->request->is('post')) {
+		if ($this->request->is('post') || $this->request->is('put')) {
 			
 			$this->__setupAutopublish();
 			
