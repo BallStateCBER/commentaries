@@ -501,6 +501,7 @@ class CommentariesController extends AppController {
 			),
 			'contain' => false,
 			'fields' => array(
+				'User.id',
 				'User.name',
 				'User.email'
 			)
