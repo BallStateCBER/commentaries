@@ -494,8 +494,9 @@ class CommentariesController extends AppController {
 			'conditions' => array(
 				'User.group_id' => 3, // "Newsmedia"
 				'User.nm_email_alerts' => 1,
-				'NOT' => array(
-					'User.last_alert_article_id' => $commentary['id']
+				'OR' => array(
+					'User.last_alert_article_id' => null,
+					'User.last_alert_article_id <>' => $commentary['id']
 				)
 			),
 			'contain' => false,
