@@ -94,7 +94,8 @@ class EmailConfig {
 		'replyTo' => 'cber@bsu.edu',
 		'emailFormat' => 'html',
 		'subject' => 'Weekly Commentary Newsmedia Alert Report',
-		'template' => 'newsmedia_alert_report'
+		'template' => 'newsmedia_alert_report',
+		'helpers' => array('Session')
 	);
 
 	public $smtp = array(
