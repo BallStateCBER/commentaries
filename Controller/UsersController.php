@@ -130,7 +130,7 @@ class UsersController extends AppController {
 	
 	public function logout() {
 		$this->Permissions->forgetPermissions();
-		$this->Flash->set('You are now logged out.');
+		$this->Flash->success('You are now logged out.');
 		$this->redirect($this->Auth->logout());
 	}
 
