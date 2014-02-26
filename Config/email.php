@@ -85,6 +85,17 @@ class EmailConfig {
 		'subject' => 'Mike Hicks Weekly Commentary: Reset password',
 		'template' => 'reset_password'
 	);
+	
+	public $newsmedia_alert_report = array(
+		'transport' => 'Mail',
+		'from' => array('commentaries@cberdata.org' => 'Ball State CBER'),
+		'sender' => array('commentaries@cberdata.org' => 'Ball State CBER'),
+		'returnPath' => 'commentaries@cberdata.org',
+		'replyTo' => 'cber@bsu.edu',
+		'emailFormat' => 'html',
+		'subject' => 'Weekly Commentary Newsmedia Alert Report',
+		'template' => 'newsmedia_alert_report'
+	);
 
 	public $smtp = array(
 		'transport' => 'Smtp',
