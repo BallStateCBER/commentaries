@@ -13,3 +13,12 @@
 		'checked' => true
 	)); 
 	echo $this->Form->end('Login');
+?>
+
+<?php echo $this->Html->link(
+	'Forgot password',
+	array(
+		'controller' => 'users',
+		'action' => 'forgot_password'
+	)
+); ?>
