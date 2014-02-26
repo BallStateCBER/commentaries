@@ -305,7 +305,31 @@ class UsersController extends AppController {
 			'title_for_layout' => $title
 		));
 	}
- 
+
+	public function forgot_password() {
+		if ($this->request->is('post')) {
+			$email = $this->User->cleanEmail($this->request->data['User']['email']);
+			$admin_email = Configure::read('admin_email');
+			if (empty($email)) {
+				$this->Flash->error('Please enter the email address linked to your account to have your password reset. Email <a href="mailto:'.$admin_email.'">'.$admin_email.'</a> for assistance.');
+			} else {
+				$user_id = $this->User->getUserIdWithEmail($email);
+				if ($user_id) {
+					if ($this->User->sendPasswordResetEmail($user_id, $email)) {
+						$this->Flash->success('Message sent. You should be shortly receiving an email with a link to reset your password.');
+					} else {
+						$this->Flash->error('Whoops. There was an error sending your password-resetting email out. Please try again, and if it continues to not work, email <a href="mailto:'.$admin_email.'">'.$admin_email.'</a> for assistance.');
+					}
+				} else {
+					$this->Flash->error('We couldn\'t find an account registered with the email address <b>'.$email.'</b>. Make sure you spelled it correctly. Email <a href="mailto:'.$admin_email.'">'.$admin_email.'</a> for assistance.');	
+				}
+			}
+		}
+		$this->set(array(
+			'title_for_layout' => 'Forgot Password'
+		));
+	}
+
 	// Set up ACL
 	/*
 	public function initDB() {
