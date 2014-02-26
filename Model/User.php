@@ -253,7 +253,8 @@ class User extends AppModel {
 		$email->to($to_address);
 		$email->viewVars(array(
 			'name' => $this->field('name'),
-			'reset_url' => $reset_url
+			'reset_url' => $reset_url,
+			'site_url' => Router::url('/', true)
 		));
 		return $email->send();
 	}
