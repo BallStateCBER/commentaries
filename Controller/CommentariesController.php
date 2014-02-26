@@ -547,6 +547,7 @@ class CommentariesController extends AppController {
 		if ($cron_job_password == Configure::read('cron_job_password')) {
 			$commentary = $this->Commentary->getNextForNewsmedia();
 			$this->__alertNewsmedia($commentary);
+			$this->__sendNewsmediaAlertReport();
 		} else {
 			$this->Flash->error('Password incorrect');
 		}
