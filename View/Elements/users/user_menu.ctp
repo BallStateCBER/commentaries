@@ -4,7 +4,7 @@
 
 <div id="user_menu">
 	<h3>
-		<?php echo $this->Session->read('Auth.User.name'); ?>
+		<?php echo $auth_user['User']['name']; ?>
 	</h3>	
 	<ul class="root">
 		<li>
