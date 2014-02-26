@@ -11,8 +11,10 @@ class UsersController extends AppController {
 	public function beforeFilter() {
 	    parent::beforeFilter();
 		$this->Auth->allow(
+			'forgot_password',
 			'login',
-			'logout'
+			'logout',
+			'reset_password'
 		);
 	}
 
@@ -308,25 +310,74 @@ class UsersController extends AppController {
 
 	public function forgot_password() {
 		if ($this->request->is('post')) {
-			$email = $this->User->cleanEmail($this->request->data['User']['email']);
 			$admin_email = Configure::read('admin_email');
+			$email = $this->User->cleanEmail($this->request->data['User']['email']);
 			if (empty($email)) {
-				$this->Flash->error('Please enter the email address linked to your account to have your password reset. Email <a href="mailto:'.$admin_email.'">'.$admin_email.'</a> for assistance.');
+				$this->Flash->error('Please enter the email address associated with your account to have your password reset. Email <a href="mailto:'.$admin_email.'">'.$admin_email.'</a> if you need any assistance.');
 			} else {
 				$user_id = $this->User->getUserIdWithEmail($email);
 				if ($user_id) {
 					if ($this->User->sendPasswordResetEmail($user_id, $email)) {
-						$this->Flash->success('Message sent. You should be shortly receiving an email with a link to reset your password.');
+						$this->Flash->success('You should be receiving an email shortly with a link to reset your password.');
 					} else {
-						$this->Flash->error('Whoops. There was an error sending your password-resetting email out. Please try again, and if it continues to not work, email <a href="mailto:'.$admin_email.'">'.$admin_email.'</a> for assistance.');
+						$this->Flash->error('There was an error sending your password-resetting email out. Please try again, and if it continues to not work, email <a href="mailto:'.$admin_email.'">'.$admin_email.'</a> if you need any assistance.');
 					}
 				} else {
-					$this->Flash->error('We couldn\'t find an account registered with the email address <b>'.$email.'</b>. Make sure you spelled it correctly. Email <a href="mailto:'.$admin_email.'">'.$admin_email.'</a> for assistance.');	
+					$this->Flash->error('We couldn\'t find an account registered with the email address <strong>'.$email.'</strong>. Make sure you spelled it correctly. Email <a href="mailto:'.$admin_email.'">'.$admin_email.'</a> if you need any assistance.');	
 				}
 			}
 		}
 		$this->set(array(
 			'title_for_layout' => 'Forgot Password'
+		));
+	}
+	
+	public function reset_password($user_id, $reset_password_hash) {
+		$this->User->id = $user_id;
+		$email = $this->User->field('email');
+		$expected_hash = $this->User->getResetPasswordHash($user_id, $email);
+		if ($reset_password_hash != $expected_hash) {
+			$this->Flash->error('Invalid password-resetting code. Make sure that you entered the correct address and that the link emailed to you hasn\'t expired.');
+			$this->redirect('/');	
+		}
+		if ($this->request->is('post')) {
+			$this->User->set($this->request->data);
+			if ($this->User->validates()) {
+				$this->User->set('password', $this->data['User']['new_password']);
+				if ($this->User->save()) {
+					
+					// Attempt to log the user in
+					$credentials = $this->User->find(
+						'first',
+						array(
+							'conditions' => array(
+								'User.id' => $user_id
+							)
+						)
+					);
+					$credentials['User']['password'] = $this->request->data['User']['new_password'];
+					
+					if ($this->Auth->login($credentials)) {
+						$this->Flash->success('Password changed. You are now logged in.');
+						$this->redirect('/');
+					} else {
+						$this->Flash->success('Password changed. You may now log in.');
+						$this->redirect(array(
+							'controller' => 'users', 
+							'action' => 'login'
+						));
+					}
+				} else {
+					$this->Flash->error('There was an error changing your password.');
+				}
+			}
+			unset($this->request->data['User']['new_password']);
+			unset($this->request->data['User']['confirm_password']);
+		}
+		$this->set(array(
+			'title_for_layout' => 'Reset Password',
+			'user_id' => $user_id,
+			'reset_password_hash' => $reset_password_hash
 		));
 	}
 
