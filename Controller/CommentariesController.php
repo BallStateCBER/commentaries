@@ -528,6 +528,21 @@ class CommentariesController extends AppController {
 		}
 	}
 
+	/**
+	 * Emails a report to the administrator with the results of __alertNewsmedia()
+	 * (Actually, with whatever messages are in Session.FlashMessage)
+	 */
+	private function __sendNewsmediaAlertReport() {
+		App::uses('CakeEmail', 'Network/Email');
+		$email = new CakeEmail('newsmedia_alert_report');
+		$recipient_email = Configure::read('admin_email');
+		$email->to($recipient_email);
+		$email->viewVars(array(
+			'results' => $this->Session->read('FlashMessage')
+		));
+		return $email->send();
+	}
+
 	public function send_timed_alert($cron_job_password) {
 		if ($cron_job_password == Configure::read('cron_job_password')) {
 			$commentary = $this->Commentary->getNextForNewsmedia();
