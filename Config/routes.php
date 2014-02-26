@@ -54,6 +54,8 @@ Router::connect('/index', 		array('controller' => 'commentaries', 'action' => 'r
 Router::connect('/newsmedia', 	array('controller' => 'commentaries', 'action' => 'index', 'newsmedia' => true));
 Router::connect('/newsmedia/subscribe', array('controller' => 'users', 'action' => 'add_newsmedia'));
 Router::connect('/newsmedia/my_account', array('controller' => 'users', 'action' => 'my_account', 'newsmedia' => true));
+Router::connect('/forgot_password',	array('controller' => 'users', 'action' => 'forgot_password'));
+Router::connect('/reset_password/*',	array('controller' => 'users', 'action' => 'reset_password'));
 
 CakePlugin::routes();
 require CAKE . 'Config' . DS . 'routes.php';
