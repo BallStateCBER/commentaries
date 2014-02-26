@@ -249,7 +249,7 @@ class User extends AppModel {
 		), true);
 		
 		App::uses('CakeEmail', 'Network/Email');
-		$email = new CakeEmail('default');
+		$email = new CakeEmail('reset_password');
 		$email->to($to_address);
 		$email->viewVars(array(
 			'name' => $this->field('name'),
