@@ -357,6 +357,11 @@ class UsersController extends AppController {
 					);
 					$credentials['User']['password'] = $this->request->data['User']['new_password'];
 					
+					/* Modify credentials so that the session's Auth.User variable is 
+					 * formatted the same as if this user logged in normally. */
+					$credentials = array_merge($credentials, $credentials['User']);
+					unset($credentials['User']); 
+					
 					if ($this->Auth->login($credentials)) {
 						$this->Flash->success('Password changed. You are now logged in.');
 						$this->redirect('/');
