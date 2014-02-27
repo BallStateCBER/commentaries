@@ -215,16 +215,10 @@ class CommentariesController extends AppController {
 		}
 		if ($this->Commentary->delete()) {
 			$this->Flash->success('Commentary deleted');
-			$this->redirect(array(
-				'controller' => 'commentaries', 
-				'action' => 'index'
-			));
+			$this->redirect($this->referer());
 		}
 		$this->Flash->error('Commentary was not deleted');
-		$this->redirect(array(
-			'controller' => 'commentaries', 
-			'action' => 'index'
-		));
+		$this->redirect($this->referer());
 	}
 	
 	private function __exportToIceMiller($id = null) {
