@@ -1,5 +1,5 @@
 <h1 class="page_title">
-	Submit a Commentary
+	<?php echo $title_for_layout; ?>
 </h1>
 <?php 
 	echo $this->Form->create(

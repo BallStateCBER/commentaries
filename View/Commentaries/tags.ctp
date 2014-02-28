@@ -1,5 +1,5 @@
 <h1 class="page_title">
-	Tags Used in CBER Weekly Commentaries
+	<?php echo $title_for_layout; ?>
 </h1>
 <div id="tag_list">
 	<div class="controls">

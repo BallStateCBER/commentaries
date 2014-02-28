@@ -1,5 +1,5 @@
 <h1 class="page_title">
-	Commentary Drafts
+	<?php echo $title_for_layout; ?>
 </h1>
 
 <?php if (empty($commentaries)): ?>

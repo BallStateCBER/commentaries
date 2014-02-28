@@ -1,5 +1,5 @@
 <h1 class="page_title">
-	CBER Weekly Commentaries - <?php echo $year; ?>
+	<?php echo $title_for_layout; ?>
 </h1>
 
 <?php $years = range($latestYear, $earliestYear); ?>
