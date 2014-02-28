@@ -409,10 +409,10 @@ class CommentariesController extends AppController {
 		$earliestYear = substr($this->Commentary->field('published_date', 'published_date > 0', 'published_date ASC'), 0, 4);
 		$latestYear = substr($this->Commentary->field('published_date', 'published_date > 0', 'published_date DESC'), 0, 4);
 		if (is_numeric($year) && $year >= $earliestYear && $year <= $latestYear) {
-			$title_for_layout = "Browse ($year)";
+			$title_for_layout = "CBER Weekly Commentaries - $year";
 		} else {
 			$year = $latestYear;
-			$title_for_layout = 'Browse';
+			$title_for_layout = 'CBER Weekly Commentaries';
 		}
 		$commentaries = $this->Commentary->find('all', array(
 			'conditions' => array(
