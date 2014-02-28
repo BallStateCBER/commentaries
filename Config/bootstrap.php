@@ -158,3 +158,4 @@ CakeLog::config('error', array(
 ));
 
 Configure::write('admin_email', 'gtwatson@bsu.edu');
+Configure::write('ckeditor_custom_config', '/js/ckeditor_config.js');

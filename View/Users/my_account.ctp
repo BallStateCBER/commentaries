@@ -7,4 +7,12 @@
 <?php echo $this->Form->input('confirm_password', array('type' => 'password')); ?>
 <?php echo $this->Form->input('id', array('type'=>'hidden')); ?>
 <?php echo $this->Form->end('Submit'); ?>
-<?php echo $this->element('rich_text_editor_init', array(), array('plugin' => 'DataCenter')); ?>
+<?php echo $this->element(
+	'rich_text_editor_init', 
+	array(
+		'customConfig' => Configure::read('ckeditor_custom_config')
+	), 
+	array(
+		'plugin' => 'DataCenter'
+	)
+); ?>

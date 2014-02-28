@@ -79,7 +79,15 @@
 </fieldset>
 <?php 
 	echo $this->Form->end('Submit');
-	echo $this->element('rich_text_editor_init', array(), array('plugin' => 'DataCenter'));
+	echo $this->element(
+		'rich_text_editor_init', 
+		array(
+			'customConfig' => Configure::read('ckeditor_custom_config')
+		), 
+		array(
+			'plugin' => 'DataCenter'
+		)
+	);
 	echo $this->Html->script('admin.js', array('inline' => false));
 ?>
 <?php $this->Js->buffer("
