@@ -44,8 +44,25 @@ class AppController extends Controller {
 	public $components = array(
 		'DebugKit.Toolbar',
 		'DataCenter.AutoLogin' => array(
+			// Model settings
+			'model' => 'User',
 			'username' => 'email',
-			'expires' => '+1 year'
+			'password' => 'password',
+	 
+			// Controller settings
+			'plugin' => '',
+			'controller' => 'users',
+			'loginAction' => 'login',
+			'logoutAction' => 'logout',
+	 
+			// Cookie settings
+			'cookieName' => 'rememberMe',
+			'expires' => '+1 year',
+	 
+			// Process logic
+			'active' => true,
+			'redirect' => true,
+			'requirePrompt' => true
 		),
 		'DataCenter.Flash',
 		'DataCenter.TagManager',
@@ -70,28 +87,6 @@ class AppController extends Controller {
 		$this->Auth->loginAction = array('controller' => 'users', 'action' => 'login', 'plugin' => false, 'admin' => false);
 		$this->Auth->logoutRedirect = array('controller' => 'users', 'action' => 'login', 'plugin' => false, 'admin' => false);
 		$this->Auth->loginRedirect = array('controller' => 'commentaries', 'action' => 'index', 'plugin' => false, 'admin' => false);
-		
-		$this->AutoLogin->settings = array(
-			// Model settings
-			'model' => 'User',
-			'username' => 'email',
-			'password' => 'password',
-	 
-			// Controller settings
-			'plugin' => '',
-			'controller' => 'users',
-			'loginAction' => 'login',
-			'logoutAction' => 'logout',
-	 
-			// Cookie settings
-			'cookieName' => 'rememberMe',
-			'expires' => '+1 year',
-	 
-			// Process logic
-			'active' => true,
-			'redirect' => true,
-			'requirePrompt' => true
-		);
 		
 		// Using "rijndael" encryption because the default "cipher" type of encryption fails to decrypt when PHP has the Suhosin patch installed. 
         // See: http://cakephp.lighthouseapp.com/projects/42648/tickets/471-securitycipher-function-cannot-decrypt
