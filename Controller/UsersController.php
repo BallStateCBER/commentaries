@@ -5,9 +5,7 @@ App::uses('AppController', 'Controller');
  *
  * @property User $User
  */
-class UsersController extends AppController {
-	public $components = array('DataCenter.Permissions');
-	
+class UsersController extends AppController {	
 	public function beforeFilter() {
 	    parent::beforeFilter();
 		$this->Auth->allow(
@@ -116,7 +114,6 @@ class UsersController extends AppController {
 	    if ($this->request->is('post')) {
 	        if ($this->Auth->login()) {
 	        	$user = $this->Auth->user();
-			    $this->Permissions->storePermissions($user['group_id']);
 	            $this->redirect($this->Auth->redirect());
 	        } else {
 	        	$this->User->invalidate('email', 'Your email address or password was incorrect.');
@@ -129,7 +126,6 @@ class UsersController extends AppController {
 	
 	
 	public function logout() {
-		$this->Permissions->forgetPermissions();
 		$this->Flash->success('You are now logged out.');
 		$this->redirect($this->Auth->logout());
 	}

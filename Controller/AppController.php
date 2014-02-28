@@ -39,8 +39,7 @@ class AppController extends Controller {
 		'Text', 
 		'Session', 
 		'Paginator', 
-		'Form',
-		'DataCenter.Permission'
+		'Form'
 	);
 	public $components = array(
 		'DebugKit.Toolbar',
