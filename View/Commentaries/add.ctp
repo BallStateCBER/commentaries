@@ -52,11 +52,13 @@
 		)
 	);
 	echo $this->element(
-		'tags/editor', 
-		compact(
-			'available_tags', 
-			'selected_tags'
-		), 
+		'tags/editor',
+		array(
+			'available_tags' => $available_tags, 
+			'selected_tags' => $selected_tags,
+			'hide_label' => true,
+			'allow_custom' => true
+		),
 		array(
 			'plugin' => 'DataCenter'
 		)
