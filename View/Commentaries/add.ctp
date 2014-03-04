@@ -55,7 +55,7 @@
 		'tags/editor',
 		array(
 			'available_tags' => $available_tags, 
-			'selected_tags' => $selected_tags,
+			'selected_tags' => isset($this->request->data['Tag']) ? $this->request->data['Tag'] : array(),
 			'hide_label' => true,
 			'allow_custom' => true
 		),
