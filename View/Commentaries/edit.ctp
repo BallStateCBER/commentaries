@@ -52,10 +52,12 @@
 	);
 	echo $this->element(
 		'tags/editor', 
-		compact(
-			'available_tags', 
-			'selected_tags'
-		), 
+		array(
+			'available_tags' => $available_tags, 
+			'selected_tags' => isset($this->request->data['Tag']) ? $this->request->data['Tag'] : array(),
+			'hide_label' => true,
+			'allow_custom' => true
+		),
 		array(
 			'plugin' => 'DataCenter'
 		)
