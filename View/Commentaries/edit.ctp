@@ -68,7 +68,10 @@
 			'available_tags' => $available_tags, 
 			'selected_tags' => isset($this->request->data['Tag']) ? $this->request->data['Tag'] : array(),
 			'hide_label' => true,
-			'allow_custom' => true
+			'allow_custom' => true,
+			'options' => array(
+				'show_list' => true
+			)
 		),
 		array(
 			'plugin' => 'DataCenter'
