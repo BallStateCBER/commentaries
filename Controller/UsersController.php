@@ -85,12 +85,12 @@ class UsersController extends AppController {
  */
 	public function edit($id = null) {
 		$this->User->id = $id;
-		if (!$this->User->exists()) {
+		if (! $this->User->exists()) {
 			throw new NotFoundException(__('Invalid user'));
 		}
 		if ($this->request->is('post') || $this->request->is('put')) {
 			if ($this->User->save($this->request->data)) {
-				$this->Flash->true('User info updated');
+				$this->Flash->success('User info updated');
 				$this->redirect(array(
 					'action' => 'index',
 					'admin' => true
