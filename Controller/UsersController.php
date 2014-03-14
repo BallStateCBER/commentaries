@@ -93,7 +93,11 @@ class UsersController extends AppController {
 			$this->request->data = $this->User->read(null, $id);
 		}
 		$groups = $this->User->Group->find('list');
-		$this->set(compact('groups'));
+		$user_name = $this->request->data['User']['name'];
+		$this->set(array(
+			'groups' => $groups,
+			'title_for_layout' => "Edit $user_name's Info"
+		));
 	}
 
 /**
