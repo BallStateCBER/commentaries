@@ -137,6 +137,17 @@
 					</li>
 					<li>
 						<?php echo $this->Html->link(
+							'Edit Users', 
+							array(
+								'controller' => 'users', 
+								'action' => 'index', 
+								'admin' => true, 
+								'plugin' => false
+							)
+						); ?>
+					</li>
+					<li>
+						<?php echo $this->Html->link(
 							'Add a Newsmedia Member', 
 							array(
 								'controller' => 'users', 
