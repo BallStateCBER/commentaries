@@ -90,19 +90,20 @@ class UsersController extends AppController {
 		}
 		if ($this->request->is('post') || $this->request->is('put')) {
 			if ($this->User->save($this->request->data)) {
-				$this->Flash->set(__('The user has been saved'));
-				$this->redirect(array('action' => 'index'));
+				$this->Flash->true('User info updated');
+				$this->redirect(array(
+					'action' => 'index',
+					'admin' => true
+				));
 			} else {
-				$this->Flash->set(__('The user could not be saved. Please, try again.'));
+				$this->Flash->error('There was an error updating the user\'s info.');
 			}
 		} else {
 			$this->request->data = $this->User->read(null, $id);
 		}
-		$groups = $this->User->Group->find('list');
-		$user_name = $this->request->data['User']['name'];
 		$this->set(array(
-			'groups' => $groups,
-			'title_for_layout' => "Edit $user_name's Info"
+			'groups' => $this->User->Group->find('list'),
+			'title_for_layout' => 'Edit '.$this->request->data['User']['name'].'\'s Info'
 		));
 	}
 
