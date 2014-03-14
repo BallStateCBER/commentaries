@@ -5,7 +5,9 @@ App::uses('AppController', 'Controller');
  *
  * @property User $User
  */
-class UsersController extends AppController {	
+class UsersController extends AppController {
+	public $components = array('Paginator');
+	
 	public function beforeFilter() {
 	    parent::beforeFilter();
 		$this->Auth->allow(
@@ -28,9 +30,13 @@ class UsersController extends AppController {
 	
 	public function admin_index() {
 		$this->User->recursive = 0;
+		$this->Paginator->settings = array(
+			'limit' => 100,
+			'order' => 'User.group_id, User.name ASC'
+		);
 		$this->set(array(
 			'title_for_layout' => 'Manage Users',
-			'users' => $this->paginate()
+			'users' => $this->Paginator->paginate()
 		));
 	}
 
