@@ -115,11 +115,17 @@ class UsersController extends AppController {
 			throw new NotFoundException(__('Invalid user'));
 		}
 		if ($this->User->delete()) {
-			$this->Flash->set(__('User deleted'));
-			$this->redirect(array('action' => 'index'));
+			$this->Flash->success('User deleted');
+			$this->redirect(array(
+				'action' => 'index', 
+				'admin' => true
+			));
 		}
-		$this->Flash->set(__('User was not deleted'));
-		$this->redirect(array('action' => 'index'));
+		$this->Flash->error('User was not deleted');
+		$this->redirect(array(
+			'action' => 'index',
+			'admin' => true
+		));
 	}
 	
 	public function login() {
