@@ -536,6 +536,7 @@ class CommentariesController extends AppController {
 			$this->Flash->success($success_count.__n(' member', ' members', $success_count).' of the newsmedia alerted.');
 			$this->Flash->error('Error sending newsmedia alerts to the following: '.implode(', ', $error_recipients));
 		}
+		$this->Flash->set('Total time spent: '.DebugTimer::requestTime());
 	}
 
 	/**
