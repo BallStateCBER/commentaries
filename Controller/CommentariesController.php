@@ -528,7 +528,7 @@ class CommentariesController extends AppController {
 
 		// Output results
 		if (empty($success_recipients)) {
-			$this->Flash->error('Error: No newsmedia alerts were successfully sent.');
+			$this->Flash->set('No newsmedia alerts were sent');
 		} else {
 			$email_list = implode(', ', $success_recipients);
 			$this->Flash->success("Newsmedia alerted: $emails");
