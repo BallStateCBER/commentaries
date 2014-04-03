@@ -475,7 +475,9 @@ class CommentariesController extends AppController {
 		));
 	}
 
-	private function __alertNewsmedia($commentary) {
+	private function __alertNewsmedia() {
+		$commentary = $this->Commentary->getNextForNewsmedia();
+
 		if (empty($commentary)) {
 			$this->Flash->set('No commentary available to alert newsmedia to.');
 			return;
@@ -565,8 +567,7 @@ class CommentariesController extends AppController {
 		} elseif (date('Hi') < '1400') {
 			$this->Flash->error('Alerts are only sent out after 2pm on Wednesday');
 		} elseif ($cron_job_password == Configure::read('cron_job_password')) {
-			$commentary = $this->Commentary->getNextForNewsmedia();
-			$this->__alertNewsmedia($commentary);
+			$this->__alertNewsmedia();
 		} else {
 			$this->Flash->error('Password incorrect');
 		}
