@@ -500,14 +500,14 @@ class CommentariesController extends AppController {
 				'User.email'
 			)
 		));
-		if (empty($newsmedia)) {
+		$count = count($newsmedia);
+		if ($count == 0) {
 			$this->Flash->set('Newsmedia not alerted. No applicable members (opted in to alerts and not yet alerted) found in database.');
 			return;
 		}
 
 		// Impose limit on how many emails are sent out in one batch
 		$limit = 5;
-		$count = count($newsmedia);
 		if ($count > $limit) {
 			$newsmedia = array_slice($newsmedia, 0, $limit);
 		}
