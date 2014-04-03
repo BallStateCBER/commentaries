@@ -505,14 +505,30 @@ class CommentariesController extends AppController {
 			return;
 		}
 
+		// Impose limit on how many emails are sent out in one batch
+		$limit = 5;
+		$count = count($newsmedia);
+		if ($count > $limit) {
+			$newsmedia = array_slice($newsmedia, 0, $limit);
+		}
+
 		$error_recipients = array();
+		$recipient_emails = array();
 		foreach ($newsmedia as $user) {
+			$recipient_emails[] = $user['User']['email'];
 			if (! $this->User->sendNewsmediaAlertEmail($user, $commentary)) {
 				$error_recipients[] = $user['User']['email'];
 			}
 		}
 		if (empty($error_recipients)) {
-			$this->Flash->success('Newsmedia alerted.');
+			$email_list = implode(', ', $recipient_emails);
+			$this->Flash->success("Newsmedia alerted: $emails");
+			if ($count > $limit) {
+				$difference = $count - $limit;
+				$this->Flash->set($difference.' more '.__n('user', 'users', $difference).' left to alert');
+			} else {
+				$this->Flash->set('All newsmedia members have now been alerted');
+			}
 		} elseif (count($error_recipients) == count($newsmedia)) {
 			$this->Flash->error('Error: No newsmedia alerts were successfully sent.');
 		} else {
