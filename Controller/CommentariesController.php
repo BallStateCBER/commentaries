@@ -512,16 +512,22 @@ class CommentariesController extends AppController {
 			$newsmedia = array_slice($newsmedia, 0, $limit);
 		}
 
+		// Send emails
 		$error_recipients = array();
-		$recipient_emails = array();
+		$success_recipients = array();
 		foreach ($newsmedia as $user) {
-			$recipient_emails[] = $user['User']['email'];
-			if (! $this->User->sendNewsmediaAlertEmail($user, $commentary)) {
+			if ($this->User->sendNewsmediaAlertEmail($user, $commentary)) {
+				$success_recipients[] = $user['User']['email'];
+			} else {
 				$error_recipients[] = $user['User']['email'];
 			}
 		}
-		if (empty($error_recipients)) {
-			$email_list = implode(', ', $recipient_emails);
+
+		// Output results
+		if (empty($success_recipients)) {
+			$this->Flash->error('Error: No newsmedia alerts were successfully sent.');
+		} else {
+			$email_list = implode(', ', $success_recipients);
 			$this->Flash->success("Newsmedia alerted: $emails");
 			if ($count > $limit) {
 				$difference = $count - $limit;
@@ -529,11 +535,8 @@ class CommentariesController extends AppController {
 			} else {
 				$this->Flash->set('All newsmedia members have now been alerted');
 			}
-		} elseif (count($error_recipients) == count($newsmedia)) {
-			$this->Flash->error('Error: No newsmedia alerts were successfully sent.');
-		} else {
-			$success_count = count($newsmedia) - count($error_recipients);
-			$this->Flash->success($success_count.__n(' member', ' members', $success_count).' of the newsmedia alerted.');
+		}
+		if (! empty($error_recipients)) {
 			$this->Flash->error('Error sending newsmedia alerts to the following: '.implode(', ', $error_recipients));
 		}
 		$this->Flash->set('Total time spent: '.DebugTimer::requestTime());
