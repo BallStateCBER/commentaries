@@ -478,6 +478,7 @@ class CommentariesController extends AppController {
 	private function __alertNewsmedia($commentary) {
 		if (empty($commentary)) {
 			$this->Flash->set('No commentary available to alert newsmedia to.');
+			return;
 		}
 		if (isset($commentary['Commentary'])) {
 			$commentary = $commentary['Commentary'];
@@ -540,6 +541,7 @@ class CommentariesController extends AppController {
 			$this->Flash->error('Error sending newsmedia alerts to the following: '.implode(', ', $error_recipients));
 		}
 		$this->Flash->set('Total time spent: '.DebugTimer::requestTime());
+		$this->__sendNewsmediaAlertReport();
 	}
 
 	/**
@@ -565,7 +567,6 @@ class CommentariesController extends AppController {
 		} elseif ($cron_job_password == Configure::read('cron_job_password')) {
 			$commentary = $this->Commentary->getNextForNewsmedia();
 			$this->__alertNewsmedia($commentary);
-			$this->__sendNewsmediaAlertReport();
 		} else {
 			$this->Flash->error('Password incorrect');
 		}
