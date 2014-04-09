@@ -531,7 +531,7 @@ class CommentariesController extends AppController {
 			$this->Flash->set('No newsmedia alerts were sent');
 		} else {
 			$email_list = implode(', ', $success_recipients);
-			$this->Flash->success("Newsmedia alerted: $emails");
+			$this->Flash->success("Newsmedia alerted: $email_list");
 			if ($count > $limit) {
 				$difference = $count - $limit;
 				$this->Flash->set($difference.' more '.__n('user', 'users', $difference).' left to alert');
