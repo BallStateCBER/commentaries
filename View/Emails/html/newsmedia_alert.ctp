@@ -15,7 +15,7 @@
 </p>
 
 <p>
-	You can bookmark <?php echo $newsmedia_index_url; ?> and visit it at any time to access the next commentary due to be published.
+	You can bookmark <a href="<?php echo $newsmedia_index_url; ?>"><?php echo $newsmedia_index_url; ?></a> and visit it at any time to access the next commentary due to be published.
 </p>
 
 <p>

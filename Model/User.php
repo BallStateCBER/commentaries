@@ -12,12 +12,12 @@ class User extends AppModel {
     public $actsAs = array(
     	'Acl' => array(
 	    	'type' => 'requester',
-	    	
-	    	// Necessary to prevent error messages while using $this->save() http://cakephp.1045679.n5.nabble.com/ACL-is-not-working-for-groups-td4953074.html 
+
+	    	// Necessary to prevent error messages while using $this->save() http://cakephp.1045679.n5.nabble.com/ACL-is-not-working-for-groups-td4953074.html
 	    	'enabled' => false
 	    )
 	);
-	
+
 /**
  * Validation rules
  *
@@ -100,7 +100,7 @@ class User extends AppModel {
 		}
         return true;
     }
-    
+
     // Required by ACL
 	public function parentNode() {
         if (!$this->id && empty($this->data)) {
@@ -117,11 +117,11 @@ class User extends AppModel {
             return array('Group' => array('id' => $groupId));
         }
     }
-    
+
 	public function bindNode($user) {
 	    return array('model' => 'Group', 'foreign_key' => $user['User']['group_id']);
 	}
-	
+
 	public function _identicalFieldValues($field = array(), $compare_field = null) {
 		foreach ($field as $key => $value) {
 			if ($value !== $this->data[$this->name][$compare_field]) {
@@ -130,7 +130,7 @@ class User extends AppModel {
 		}
 		return true;
     }
-    
+
 	public function _isUnique($check) {
 		$values = array_values($check);
 		$value = array_pop($values);
@@ -141,7 +141,7 @@ class User extends AppModel {
 		}
 		if(isset($this->data[$this->name]['id'])) {
 			$results = $this->field('id', array(
-				"$this->name.$field" => $value, 
+				"$this->name.$field" => $value,
 				"$this->name.id <>" => $this->data[$this->name]['id']
 			));
 		} else {
@@ -151,10 +151,10 @@ class User extends AppModel {
 		}
 		return empty($results);
 	}
-	
+
 	public function generatePassword() {
 		$characters = str_shuffle('abcdefghijkmnopqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ23456789');
-		return substr($characters, 0, 6); 	
+		return substr($characters, 0, 6);
 	}
 
 	public function sendNewsmediaIntroEmail($user) {
@@ -183,12 +183,12 @@ class User extends AppModel {
 		));
 		return $email->send();
 	}
-	
+
 	public function sendNewsmediaAlertEmail($user, $commentary) {
 		if (isset($commentary['Commentary'])) {
 			$commentary = $commentary['Commentary'];
 		}
-		
+
 		App::uses('CakeEmail', 'Network/Email');
 		$email = new CakeEmail('newsmedia_alert');
 		$recipient_email = $user['User']['email'];
@@ -206,6 +206,14 @@ class User extends AppModel {
 				),
 				true
 			),
+			'newsmedia_index_url' => Router::url(
+				array(
+					'newsmedia' => true,
+					'controller' => 'commentaries',
+					'action' => 'index'
+				),
+				true
+			),
 			'date' => date('l, F jS', $timestamp)
 		));
 		if ($email->send()) {
@@ -214,13 +222,13 @@ class User extends AppModel {
 			return true;
 		}
 		return false;
-	}	
-	
+	}
+
 	public function getUserIdWithEmail($email) {
 		$result = $this->find('first', array(
 			'conditions' => array(
 				'User.email' => $email
-			), 
+			),
 			'fields' => array(
 				'User.id'
 			),
@@ -231,13 +239,13 @@ class User extends AppModel {
 		}
 		return false;
 	}
-	
+
 	public function cleanEmail($email) {
 		$email = trim($email);
 		$email = strtolower($email);
 		return $email;
 	}
-	
+
 	public function sendPasswordResetEmail($user_id, $to_address) {
 		$this->id = $user_id;
 		$reset_password_hash = $this->getResetPasswordHash($user_id, $to_address);
@@ -247,7 +255,7 @@ class User extends AppModel {
 			$user_id,
 			$reset_password_hash
 		), true);
-		
+
 		App::uses('CakeEmail', 'Network/Email');
 		$email = new CakeEmail('reset_password');
 		$email->to($to_address);
@@ -258,10 +266,10 @@ class User extends AppModel {
 		));
 		return $email->send();
 	}
-	
+
 	public function getResetPasswordHash($user_id, $email = null) {
 		$salt = 'PywIYCSLkQ';
 		$month = date('my');
-		return md5($user_id.$email.$salt.$month);	
+		return md5($user_id.$email.$salt.$month);
 	}
 }
