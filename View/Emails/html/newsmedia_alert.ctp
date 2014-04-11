@@ -3,7 +3,7 @@
 </p>
 
 <p>
-	A new commentary by Mike Hicks is now available and can be accessed at <a href="<?php echo $newsmedia_index_url; ?>"><?php echo $newsmedia_index_url; ?></a>.
+	A new commentary by Mike Hicks is now available and can be accessed at <a href="<?php echo $newsmedia_index_url; ?>"><?php echo $newsmedia_index_url; ?></a>. You can bookmark this address and visit it at any time to access the next commentary due to be published.
 </p>
 
 <p>
@@ -12,10 +12,6 @@
 
 <p>
 	Every Wednesday at approximately 2:00pm EST, we will send you an email alert containing a link to the next commentary due to be published. Be sure to add <strong>commentaries@cberdata.org</strong> to your address book so that these emails are not blocked by your email client's spam filter.
-</p>
-
-<p>
-	You can bookmark <a href="<?php echo $newsmedia_index_url; ?>"><?php echo $newsmedia_index_url; ?></a> and visit it at any time to access the next commentary due to be published.
 </p>
 
 <p>
