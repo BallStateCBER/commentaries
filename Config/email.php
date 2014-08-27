@@ -43,7 +43,9 @@
 class EmailConfig {
 
 	public $default = array(
-		'transport' => 'Mail',
+		'transport' => 'Smtp',
+		'port' => 25,
+		'host' => 'localhost', // puffer.interserver.net or 209.159.145.114 could also be used
 		'from' => array('commentaries@cberdata.org' => 'Ball State CBER'),
 		'sender' => array('commentaries@cberdata.org' => 'Ball State CBER'),
 		'returnPath' => 'cber@bsu.edu',
@@ -52,9 +54,11 @@ class EmailConfig {
 		//'charset' => 'utf-8',
 		//'headerCharset' => 'utf-8',
 	);
-	
+
 	public $newsmedia_alert = array(
-		'transport' => 'Mail',
+		'transport' => 'Smtp',
+		'port' => 25,
+		'host' => 'localhost', // puffer.interserver.net or 209.159.145.114 could also be used
 		'from' => array('commentaries@cberdata.org' => 'Ball State CBER'),
 		'sender' => array('commentaries@cberdata.org' => 'Ball State CBER'),
 		'returnPath' => 'cber@bsu.edu',
@@ -63,9 +67,11 @@ class EmailConfig {
 		'subject' => 'Mike Hicks Weekly Commentary now available',
 		'template' => 'newsmedia_alert'
 	);
-	
+
 	public $newsmedia_intro = array(
-		'transport' => 'Mail',
+		'transport' => 'Smtp',
+		'port' => 25,
+		'host' => 'localhost', // puffer.interserver.net or 209.159.145.114 could also be used
 		'from' => array('commentaries@cberdata.org' => 'Ball State CBER'),
 		'sender' => array('commentaries@cberdata.org' => 'Ball State CBER'),
 		'returnPath' => 'cber@bsu.edu',
@@ -76,7 +82,9 @@ class EmailConfig {
 	);
 
 	public $reset_password = array(
-		'transport' => 'Mail',
+		'transport' => 'Smtp',
+		'port' => 25,
+		'host' => 'localhost', // puffer.interserver.net or 209.159.145.114 could also be used
 		'from' => array('commentaries@cberdata.org' => 'Ball State CBER'),
 		'sender' => array('commentaries@cberdata.org' => 'Ball State CBER'),
 		'returnPath' => 'cber@bsu.edu',
@@ -85,9 +93,11 @@ class EmailConfig {
 		'subject' => 'Mike Hicks Weekly Commentary: Reset password',
 		'template' => 'reset_password'
 	);
-	
+
 	public $newsmedia_alert_report = array(
-		'transport' => 'Mail',
+		'transport' => 'Smtp',
+		'port' => 25,
+		'host' => 'localhost', // puffer.interserver.net or 209.159.145.114 could also be used
 		'from' => array('commentaries@cberdata.org' => 'Ball State CBER'),
 		'sender' => array('commentaries@cberdata.org' => 'Ball State CBER'),
 		'returnPath' => 'cber@bsu.edu',
