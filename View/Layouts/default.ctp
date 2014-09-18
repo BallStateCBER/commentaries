@@ -6,7 +6,7 @@
 <?php $this->start('subsite_title'); ?>
 	<h1 id="subsite_title" class="max_width">
 		<a href="/">
-			<img src="/img/WkCommentary.png" />
+			<img src="/img/Commentary.jpg" />
 		</a>
 	</h1>
 <?php $this->end(); ?>
