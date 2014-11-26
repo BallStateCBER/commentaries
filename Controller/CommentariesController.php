@@ -562,7 +562,7 @@ class CommentariesController extends AppController {
 	}
 
 	public function send_timed_alert($cron_job_password) {
-		$alert_day = 'Tuesday';
+		$alert_day = 'Wednesday';
 		if (date('l') != $alert_day) {
 			$this->Flash->error('Alerts are only sent out on '.$alert_day.'s');
 		} elseif (date('Hi') < '1400') {
