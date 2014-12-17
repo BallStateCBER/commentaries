@@ -1,6 +1,13 @@
 <?php
 if (! isset($newest)) $newest = false;
 ?>
+
+<p>
+	<strong>
+		To accommodate holiday closings, the commentary will be made available to newsmedia on Monday, December 22<sup>nd</sup> and Monday, December 29<sup>th</sup>.
+	</strong>
+</p>
+
 <div class="commentary">
 	<div class="header">
 		<?php if ($this->Session->check('Auth.User.id')): ?>
@@ -9,8 +16,8 @@ if (! isset($newest)) $newest = false;
 					<?php echo $this->Html->link(
 						$this->Html->image('/data_center/img/icons/pencil.png').'Edit',
 						array(
-							'controller' => 'commentaries', 
-							'action' => 'edit', 
+							'controller' => 'commentaries',
+							'action' => 'edit',
 							$commentary['Commentary']['id'],
 							'admin' => false,
 							'newsmedia' => false
@@ -22,8 +29,8 @@ if (! isset($newest)) $newest = false;
 					&nbsp; <?php echo $this->Html->link(
 						$this->Html->image('/data_center/img/icons/cross.png').'Delete',
 						array(
-							'controller' => 'commentaries', 
-							'action' => 'delete', 
+							'controller' => 'commentaries',
+							'action' => 'delete',
 							$commentary['Commentary']['id'],
 							'admin' => false,
 							'newsmedia' => false
@@ -61,8 +68,8 @@ if (! isset($newest)) $newest = false;
 		<p class="link">
 			<?php
 				$permalink = Router::url(array(
-					'controller' => 'commentaries', 
-					'action' => 'view', 
+					'controller' => 'commentaries',
+					'action' => 'view',
 					'id' => $commentary['Commentary']['id'],
 					'slug' => $commentary['Commentary']['slug'],
 					'admin' => false,
@@ -78,13 +85,13 @@ if (! isset($newest)) $newest = false;
 					$linked_tags = array();
 					foreach ($commentary['Tag'] as $key => $tag) {
 						$linked_tags[] = $this->Html->link($tag['name'], array(
-							'controller' => 'commentaries', 
-							'action' => 'tagged', 
+							'controller' => 'commentaries',
+							'action' => 'tagged',
 							'id' => $tag['id'],
 							'admin' => false,
 							'newsmedia' => false
 						));
-					} 
+					}
 					echo implode(', ', $linked_tags);
 				?>
 			</p>
