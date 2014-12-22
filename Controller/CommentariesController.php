@@ -562,6 +562,7 @@ class CommentariesController extends AppController {
 	}
 
 	public function send_timed_alert($cron_job_password) {
+		/* Temporarily disable while alerts are being sent out manually
 		$alert_day = 'Monday';
 		if (date('l') != $alert_day) {
 			$this->Flash->error('Alerts are only sent out on '.$alert_day.'s');
@@ -572,6 +573,7 @@ class CommentariesController extends AppController {
 		} else {
 			$this->Flash->error('Password incorrect');
 		}
+		*/
 		$this->render('DataCenter.Common/blank');
 	}
 }
