@@ -57,11 +57,11 @@ class PagesController extends AppController {
  * @param mixed What page to display
  * @return void
  */
-
+	
 	public function beforeFilter() {
 		parent::beforeFilter();
 	}
-
+	
 	public function display() {
 		$path = func_get_args();
 
@@ -83,8 +83,8 @@ class PagesController extends AppController {
 		$this->set(compact('page', 'subpage', 'title_for_layout'));
 		$this->render(implode('/', $path));
 	}
-
-	function home() { $this->Flash->set('test');
-
+	
+	function home() {
+		
 	}
 }
