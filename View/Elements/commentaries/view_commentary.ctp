@@ -2,12 +2,6 @@
 if (! isset($newest)) $newest = false;
 ?>
 
-<p>
-	<strong>
-		To accommodate holiday closings, the commentary will be made available to newsmedia on Monday, December 22<sup>nd</sup> and Monday, December 29<sup>th</sup>.
-	</strong>
-</p>
-
 <div class="commentary">
 	<div class="header">
 		<?php if ($this->Session->check('Auth.User.id')): ?>
