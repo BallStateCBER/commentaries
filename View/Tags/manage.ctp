@@ -118,8 +118,7 @@ Vegetables
 <?php 
 	echo $this->Html->css('/ext-2.0.1/resources/css/ext-custom.css', null, array('inline' => false));
 	echo $this->Html->script('/ext-2.0.1/ext-custom.js', array('inline' => false));
-	echo $this->Html->css('/jquery_ui/css/smoothness/jquery-ui-1.10.4.custom.min.css', null, array('inline' => false));
-	echo $this->Html->script('/jquery_ui/js/jquery-ui-1.10.4.custom.js', array('inline' => false));
+	echo $this->element('DataCenter.jquery_ui');
 	
 	echo $this->Html->script('jquery.form.js', array('inline' => false));
 	echo $this->Html->script('admin.js', array('inline' => false));
