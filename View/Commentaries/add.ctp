@@ -1,64 +1,64 @@
 <h1 class="page_title">
 	<?php echo $title_for_layout; ?>
 </h1>
-<?php 
+<?php
 	echo $this->Form->create(
-		'Commentary', 
+		'Commentary',
 		array(
 			'url' => array(
-				'controller' => 'commentaries', 
+				'controller' => 'commentaries',
 				'action' => 'add'
 			)
 		)
 	);
 	echo $this->Form->input(
-		'user_id', 
+		'user_id',
 		array(
-			'label' => 'Author', 
-			'options' => $authors, 
+			'label' => 'Author',
+			'options' => $authors,
 			'style' => 'width: 400px;'
 		)
 	);
 	echo $this->Form->input(
-		'title', 
+		'title',
 		array(
-			'label' => 'Title', 
+			'label' => 'Title',
 			'style' => 'width: 400px;'
 		)
 	);
 	echo $this->Form->input(
-		'summary', 
+		'summary',
 		array(
-			'label' => 'Summary', 
+			'label' => 'Summary',
 			'style' => 'width: 400px;'
 		)
 	);
 	echo $this->Form->input(
-		'published_date', 
+		'published_date',
 		array(
-			'type' => 'date', 
-			'dateFormat' => 'MDY', 
-			'label' => 'Date', 
+			'type' => 'date',
+			'dateFormat' => 'MDY',
+			'label' => 'Date',
 			'minYear' => 2001,
 			'maxYear' => date('Y') + 1
 		)
 	);
 	echo $this->Form->input(
-		'body', 
+		'body',
 		array(
-			'label' => 'Body', 
-			'style' => 'height: 300px; width: 100%;', 
+			'label' => 'Body',
+			'style' => 'height: 300px; width: 100%;',
 			'between' => '<div class="footnote">ENTER double-spaces. SHIFT + ENTER single-spaces.</div>'
 		)
 	);
 	$this->Html->css(
-		'/jquery_ui/css/smoothness/jquery-ui-1.10.4.custom.min.css', 
+		'/jquery_ui/css/smoothness/jquery-ui-1.10.4.custom.min.css',
 		array(
 			'inline' => false
 		)
 	);
 	$this->Html->script(
-		'/jquery_ui/js/jquery-ui-1.10.4.custom.min.js', 
+		'/jquery_ui/js/jquery-ui-1.10.4.custom.min.js',
 		array(
 			'inline' => false
 		)
@@ -66,7 +66,7 @@
 	echo $this->element(
 		'tags/editor',
 		array(
-			'available_tags' => $available_tags, 
+			'available_tags' => $available_tags,
 			'selected_tags' => isset($this->request->data['Tag']) ? $this->request->data['Tag'] : array(),
 			'hide_label' => true,
 			'allow_custom' => true,
@@ -81,32 +81,29 @@
 ?>
 <fieldset>
 	<legend>Publishing</legend>
-	<?php 
+	<?php
 		echo $this->Form->radio(
-			'is_published', 
+			'is_published',
 			array(
-				1 => ' Publish <span id="delayed_publishing_date"></span>', 
+				1 => ' Publish <span id="delayed_publishing_date"></span>',
 				0 => ' Save as Draft'
-			), 
+			),
 			array(
-				'value' => 1, 
-				'legend' => false, 
+				'value' => 1,
+				'legend' => false,
 				'separator' => '<br />'
 			)
 		);
 	?>
 </fieldset>
-<?php 
+<?php
 	echo $this->Form->end('Submit');
 	echo $this->element(
-		'rich_text_editor_init', 
+		'DataCenter.rich_text_editor_init',
 		array(
 			'customConfig' => Configure::read('ckeditor_custom_config')
-		), 
-		array(
-			'plugin' => 'DataCenter'
 		)
-	); 
+	);
 	echo $this->Html->script('admin.js', array('inline' => false));
 	$this->Js->buffer("
 		toggleDelayPublishing();
