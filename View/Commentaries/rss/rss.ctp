@@ -20,25 +20,22 @@ foreach ($commentaries as $commentary) {
 
     // This is the part where we clean the body text for output as the description
     // of the rss item, this needs to have only text to make sure the feed validates
-    $combined_body = $commentary['Commentary']['body'];
-    if (! empty($commentary['Commentary']['summary'])) {
-    	$combined_body = '<p><strong>'.$commentary['Commentary']['summary'].'</strong></p>'.$combined_body;
-    }
-    $combined_body = preg_replace('=\(.*?\)=is', '', $combined_body);
-    $combined_body = $this->Text->stripLinks($combined_body);
-    $combined_body = Sanitize::stripAll($combined_body);
-    $combined_body = $this->Text->truncate($combined_body, 600, array(
+    $description = $commentary['Commentary']['body'];
+    $description = preg_replace('=\(.*?\)=is', '', $description);
+    $description = $this->Text->stripLinks($description);
+    $description = Sanitize::stripAll($description);
+    $description = $this->Text->truncate($description, 600, array(
         'ending' => '...',
         'exact'  => false,
         'html'   => true,
     ));
 	$date = date('F j, Y', strtotime($commentary['Commentary']['published_date']));
-    
+
     echo $this->Rss->item(array(), array(
         'title' => $date.': '.$commentary['Commentary']['title'],
         'link' => $commentaryLink,
         'guid' => array('url' => $commentaryLink, 'isPermaLink' => 'true'),
-        'description' => $combined_body,
+        'description' => $description,
         'pubDate' => $commentary['Commentary']['published_date']
     ));
 }

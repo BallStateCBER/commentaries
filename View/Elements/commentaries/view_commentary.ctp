@@ -51,9 +51,6 @@ if (! isset($newest)) $newest = false;
 				'newsmedia' => false
 			)); ?>
 		</h3>
-		<h4 class="summary">
-			<?php echo $commentary['Commentary']['summary']; ?>
-		</h4>
 	</div>
 	<div class="body">
 		<?php echo $this->Text->autoLink($commentary['Commentary']['body'], array('escape' => false)); ?>
