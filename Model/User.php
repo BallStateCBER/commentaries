@@ -26,14 +26,14 @@ class User extends AppModel {
 	public $validate = array(
 		'name' => array(
 			'notEmpty' => array(
-				'rule' => 'notEmpty',
+				'rule' => 'notBlank',
 				'message' => 'Please enter your name.',
 				'last' => true
 			)
 		),
 		'new_password' => array(
 			'nonempty' => array(
-				'rule' => 'notEmpty',
+				'rule' => 'notBlank',
 				'message' => 'Please enter a password.'
 			)
 		),
