@@ -1,17 +1,17 @@
 <h1 class="page_title">
 	Log in
 </h1>
-<?php 
-	echo $this->Form->create('User', array('action' => 'login'));
+<?php
+	echo $this->Form->create('User', array('url' => array('controller' => 'users', 'action' => 'login')));
 	echo $this->Form->input('email');
 	echo $this->Form->input('password', array(
 		'required' => true
 	));
 	echo $this->Form->input('auto_login', array(
-		'type' => 'checkbox', 
+		'type' => 'checkbox',
 		'label' => array('text' => ' Log me in automatically', 'style' => 'display: inline;'),
 		'checked' => true
-	)); 
+	));
 	echo $this->Form->end('Login');
 ?>
 
