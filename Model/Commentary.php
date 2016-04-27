@@ -13,10 +13,10 @@ class Commentary extends AppModel {
 			'label' => 'title',
 			'slug' => 'slug',
 			'separator' => '-',
-			'overwrite' => true   
+			'overwrite' => true
 		)
 	);
-	
+
 /**
  * Validation rules
  *
@@ -25,7 +25,7 @@ class Commentary extends AppModel {
 	public $validate = array(
 		'title' => array(
 			'notempty' => array(
-				'rule' => array('notempty'),
+				'rule' => array('notBlank'),
 				'message' => 'Title required',
 				//'allowEmpty' => false,
 				//'required' => false,
@@ -35,7 +35,7 @@ class Commentary extends AppModel {
 		),
 		'body' => array(
 			'notempty' => array(
-				'rule' => array('notempty'),
+				'rule' => array('notBlank'),
 				'message' => 'Commentary body cannot be left blank',
 				//'allowEmpty' => false,
 				//'required' => false,
@@ -120,24 +120,24 @@ class Commentary extends AppModel {
 			'insertQuery' => ''
 		)
 	);
-	
+
 	// Exports the commentary specified by ID to the Ice Miller website
 	public function exportToIceMiller($id = null) {
 		if (! $id) {
 			$id = $this->id;
 		}
-		
+
 		// Development server
 		if (stripos($_SERVER['SERVER_NAME'], 'localhost') !== false) {
 			$url = 'http://icemiller.localhost/articles/import_commentaries/'.$id;
 		// Production server
 		} else {
-			$url = 'http://icemiller.cberdata.org/articles/import_commentaries/'.$id;	
+			$url = 'http://icemiller.cberdata.org/articles/import_commentaries/'.$id;
 		}
 		$results = trim(file_get_contents($url));
 		return (boolean) $results;
 	}
-	
+
 	public function publish() {
 		if (! $this->id) {
 			return false;
@@ -146,7 +146,7 @@ class Commentary extends AppModel {
 		$this->set('published_date', date('Y-m-d', time()).' 00:00:00');
 		return $this->save();
 	}
-	
+
 	public function getUnpublishedList() {
 		return $this->find('list', array(
 			'conditions' => array(
@@ -157,7 +157,7 @@ class Commentary extends AppModel {
 			)
 		));
 	}
-	
+
 	public function getNextForNewsmedia() {
 		return $this->find('first', array(
 			'conditions' => array(
@@ -170,15 +170,15 @@ class Commentary extends AppModel {
 			)
 		));
 	}
-	
+
 	public function parentNode() {
 		return null;
 	}
-	
+
 	/**
 	 * Returns TRUE if the specified commentary matches any User.last_alert_article_id field, FALSE otherwise
 	 * @param int $commentary_id
-	 * @return boolean 
+	 * @return boolean
 	 */
 	public function isMostRecentAlert($commentary_id) {
 		if (empty($commentary_id)) {

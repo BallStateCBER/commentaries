@@ -9,10 +9,10 @@ App::uses('AppModel', 'Model');
  */
 class Tag extends AppModel {
 	public $actsAs = array(
-		'Containable', 
+		'Containable',
 		'Tree'
 	);
-	
+
 /**
  * Validation rules
  *
@@ -21,7 +21,7 @@ class Tag extends AppModel {
 	public $validate = array(
 		'name' => array(
 			'notempty' => array(
-				'rule' => array('notempty'),
+				'rule' => array('notBlank'),
 				//'message' => 'Your custom message here',
 				//'allowEmpty' => false,
 				//'required' => false,
@@ -118,7 +118,7 @@ class Tag extends AppModel {
 		$result = array_keys($result);
 		return reset($result);
 	}
-	
+
 	/**
 	 * Used by the tag adder (in the tag manager) to determine how indented a line is
 	 * @param string $name
@@ -128,14 +128,14 @@ class Tag extends AppModel {
 		$level = 0;
 		for ($i = 0; $i < strlen($name); $i++) {
 			if ($name[$i] == "\t" || $name[$i] == '-') {
-				$level++;	
+				$level++;
 			} else {
-				break;	
+				break;
 			}
 		}
 		return $level;
     }
-	
+
 	public function parentNode() {
 		return null;
 	}

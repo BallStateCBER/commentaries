@@ -11,7 +11,7 @@ class Group extends AppModel {
 			'type' => 'requester'
 		)
 	);
-	
+
 /**
  * Validation rules
  *
@@ -20,7 +20,7 @@ class Group extends AppModel {
 	public $validate = array(
 		'name' => array(
 			'notempty' => array(
-				'rule' => array('notempty'),
+				'rule' => array('notBlank'),
 				//'message' => 'Your custom message here',
 				//'allowEmpty' => false,
 				//'required' => false,
