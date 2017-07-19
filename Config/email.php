@@ -48,7 +48,7 @@ class EmailConfig {
 		'host' => 'localhost', // puffer.interserver.net or 209.159.145.114 could also be used
 		'from' => array('commentaries@cberdata.org' => 'Ball State CBER'),
 		'sender' => array('commentaries@cberdata.org' => 'Ball State CBER'),
-		'returnPath' => 'cber@bsu.edu',
+		'returnPath' => 'commentaries@cberdata.org',
 		'emailFormat' => 'both',
 		'replyTo' => 'cber@bsu.edu'
 		//'charset' => 'utf-8',
@@ -61,7 +61,7 @@ class EmailConfig {
 		'host' => 'localhost', // puffer.interserver.net or 209.159.145.114 could also be used
 		'from' => array('commentaries@cberdata.org' => 'Ball State CBER'),
 		'sender' => array('commentaries@cberdata.org' => 'Ball State CBER'),
-		'returnPath' => 'cber@bsu.edu',
+		'returnPath' => 'commentaries@cberdata.org',
 		'replyTo' => 'cber@bsu.edu',
 		'emailFormat' => 'both',
 		'subject' => 'Mike Hicks Weekly Commentary now available',
@@ -74,7 +74,7 @@ class EmailConfig {
 		'host' => 'localhost', // puffer.interserver.net or 209.159.145.114 could also be used
 		'from' => array('commentaries@cberdata.org' => 'Ball State CBER'),
 		'sender' => array('commentaries@cberdata.org' => 'Ball State CBER'),
-		'returnPath' => 'cber@bsu.edu',
+		'returnPath' => 'commentaries@cberdata.org',
 		'replyTo' => 'cber@bsu.edu',
 		'emailFormat' => 'both',
 		'subject' => 'You have been subscribed to the Mike Hicks Weekly Commentary newsmedia alert service',
@@ -87,7 +87,7 @@ class EmailConfig {
 		'host' => 'localhost', // puffer.interserver.net or 209.159.145.114 could also be used
 		'from' => array('commentaries@cberdata.org' => 'Ball State CBER'),
 		'sender' => array('commentaries@cberdata.org' => 'Ball State CBER'),
-		'returnPath' => 'cber@bsu.edu',
+		'returnPath' => 'commentaries@cberdata.org',
 		'replyTo' => 'cber@bsu.edu',
 		'emailFormat' => 'both',
 		'subject' => 'Mike Hicks Weekly Commentary: Reset password',
@@ -100,7 +100,7 @@ class EmailConfig {
 		'host' => 'localhost', // puffer.interserver.net or 209.159.145.114 could also be used
 		'from' => array('commentaries@cberdata.org' => 'Ball State CBER'),
 		'sender' => array('commentaries@cberdata.org' => 'Ball State CBER'),
-		'returnPath' => 'cber@bsu.edu',
+		'returnPath' => 'commentaries@cberdata.org',
 		'replyTo' => 'cber@bsu.edu',
 		'emailFormat' => 'html',
 		'subject' => 'Weekly Commentary Newsmedia Alert Report',
