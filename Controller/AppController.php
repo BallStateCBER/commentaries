@@ -79,7 +79,8 @@ class AppController extends Controller {
 			)
         ),
         'Cookie',
-        'Session'
+        'Session',
+        'Security'
 	);
 	
 	public function beforeFilter() {
@@ -95,6 +96,9 @@ class AppController extends Controller {
 		
 		// Prevents cookies from being accessible in Javascript
 		$this->Cookie->httpOnly = true;
+
+		$this->Security->blackHoleCallback = 'forceSSL';
+		$this->Security->requireSecure();
 	}
 	
 	public function beforeRender() {
@@ -141,4 +145,14 @@ class AppController extends Controller {
 		}
 		$this->render('/Pages/message');
 	}
+
+    /**
+     * Redirects the current request to HTTPS
+     *
+     * @return mixed
+     */
+	public function forceSSL()
+    {
+        return $this->redirect('https://' . env('SERVER_NAME') . $this->here);
+    }
 }
