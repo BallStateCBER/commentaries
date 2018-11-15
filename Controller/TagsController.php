@@ -149,17 +149,27 @@ class TagsController extends AppController {
 				break;	
 			}
 			$results = $this->Tag->find('all', array(
-				'fields' => array('Tag.name'),
+				'fields' => array('Tag.id', 'Tag.name'),
 				'conditions' => array('Tag.name LIKE' => $like),
 				'contain' => false,
 				'limit' => $limit - count($tags)
 			));
 			foreach ($results as $result) {
-				if (! in_array($result['Tag']['name'], $tags)) {
-					$tags[] = $result['Tag']['name'];
-				}
+			    $tagName = $result['Tag']['name'];
+                $tagId = $result['Tag']['id'];
+
+                if (isset($tags[$tagName])) {
+                    continue;
+                }
+
+                $tags[$tagName] = [
+                    'label' => $tagName,
+                    'value' => $tagId
+                ];
 			}
 		}
+
+		$tags = array_values($tags);
 		
 		$this->set(compact('tags'));
 		$this->layout = 'blank';
