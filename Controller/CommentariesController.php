@@ -242,7 +242,9 @@ class CommentariesController extends AppController {
 		}
 		$this->Commentary->Tag->id = $tag_id;
 		$this->Commentary->Tag->read();
-		$tagName = $this->Commentary->Tag->data['Tag']['name'];
+		$tagName = isset($this->Commentary->Tag->data['Tag']['name'])
+            ? $this->Commentary->Tag->data['Tag']['name']
+            : false;
 		if (! $tagName) {
 			$this->Flash->error('Tag not found.');
 			$this->redirect(array(
