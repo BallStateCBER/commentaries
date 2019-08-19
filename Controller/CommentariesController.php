@@ -15,7 +15,6 @@ class CommentariesController extends AppController {
 		$this->Auth->allow(
 			'autopublish',
 			'browse',
-			'export',
 			'generate_slugs',
 			'index',
 			'newsmedia_index',
@@ -91,7 +90,6 @@ class CommentariesController extends AppController {
 				if ($this->Commentary->save()) {
 					$this->Flash->success('Commentary added');
 					if ($this->request->data['Commentary']['is_published']) {
-						$this->__exportToIceMiller();
 					}
 					$this->redirect(array(
 						'controller' => 'commentaries',
@@ -221,17 +219,6 @@ class CommentariesController extends AppController {
 		$this->redirect($this->referer());
 	}
 
-	private function __exportToIceMiller($id = null) {
-		if (! $id) {
-			$id = $this->Commentary->id;
-		}
-		if ($this->Commentary->exportToIceMiller($id)) {
-			$this->Flash->success("Commentary #$id copied to Ice Miller website.");
-		} else {
-			$this->Flash->error("There was an error copying commentary #$id to Ice Miller website. Please contact site administrator for assistance.");
-		}
-	}
-
 	public function tagged($tag_id = null) {
 		if (! is_numeric($tag_id)) {
 			$this->Flash->error('Tag not found.');
@@ -319,7 +306,6 @@ class CommentariesController extends AppController {
 				$this->Commentary->saveField('is_published', 1);
 				$this->Commentary->saveField('delay_publishing', 0);
 				$this->Flash->success("Auto-published commentary #$id ($title)");
-				$this->__exportToIceMiller();
 			}
 		}
 		$this->render('DataCenter.Common/blank');
@@ -362,54 +348,10 @@ class CommentariesController extends AppController {
 			$this->Flash->set("<em>$title</em> is already published.");
 		} elseif ($this->Commentary->publish()) {
 			$this->Flash->success("<em>$title</em> has been published.");
-			$this->__exportToIceMiller();
 		} else {
 			$this->Flash->error("There was an error publishing <em>$title</em>.");
 		}
 		$this->redirect($this->referer());
-	}
-
-	/* Outputs a view with all commentaries represented in object form.
-	 * This is read by the Ice Miller website's import action so that it can copy commentaries
-	 * to its database. */
-	public function export($id = null) {
-		if ($id) {
-			$conditions = array('Commentary.id' => $id);
-		} else {
-			/* IDs for authors that will not be included in this export
-			 * 15 => Pat Barkey
-			 * Can either be an integer or an array (but array must have more than one value) */
-			$excluded_user_ids = 15;
-
-			$conditions = array(
-				'Commentary.is_published' => 1,
-				'Commentary.user_id NOT' => $excluded_user_ids
-			);
-		}
-		$commentaries = $this->Commentary->find('all', array(
-			'order' => array(
-				'Commentary.published_date DESC'
-			),
-			'conditions' => $conditions,
-			'fields' => array(
-				'Commentary.title',
-				'Commentary.body',
-				'Commentary.published_date'
-			),
-			'contain' => array(
-				'Tag' => array(
-					'fields' => array('name')
-				),
-				'User' => array(
-					'fields' => array('name')
-				)
-			)
-		));
-		$this->layout = 'ajax';
-		$this->set(array(
-			'commentaries' => $commentaries,
-			'title_for_layout' => ''
-		));
 	}
 
 	public function browse($year = null) {

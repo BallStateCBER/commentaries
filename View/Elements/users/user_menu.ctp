@@ -98,24 +98,6 @@
 							)
 						); ?>
 					</li>
-					<li>
-						<?php 
-							// Development server
-							if (stripos($_SERVER['SERVER_NAME'], 'localhost') !== false) {
-								$export_url = 'http://icemiller.localhost/articles/import_commentaries';
-							// Production server
-							} else {
-								$export_url = 'http://icemiller.cberdata.org/articles/import_commentaries';	
-							}
-						
-							echo $this->Html->link('Export to Ice Miller', 
-								$export_url,
-								array(
-									'confirm' => 'This will copy any commentaries over to the Ice Miller website that haven\'t been automatically copied upon publishing. You shouldn\'t need to ever do this manually, but you can anyway.\nIf you proceed, the next page will be blank, except for a 1 (indicating success) or a 0 (meaning some catastrophic error just occurred).'
-								)
-							); 
-						?>
-					</li>
 				</ul>
 			</li>
 		<?php endif; ?>

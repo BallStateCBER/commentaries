@@ -121,23 +121,6 @@ class Commentary extends AppModel {
 		)
 	);
 
-	// Exports the commentary specified by ID to the Ice Miller website
-	public function exportToIceMiller($id = null) {
-		if (! $id) {
-			$id = $this->id;
-		}
-
-		// Development server
-		if (stripos($_SERVER['SERVER_NAME'], 'localhost') !== false) {
-			$url = 'http://icemiller.localhost/articles/import_commentaries/'.$id;
-		// Production server
-		} else {
-			$url = 'http://icemiller.cberdata.org/articles/import_commentaries/'.$id;
-		}
-		$results = trim(file_get_contents($url));
-		return (boolean) $results;
-	}
-
 	public function publish() {
 		if (! $this->id) {
 			return false;
