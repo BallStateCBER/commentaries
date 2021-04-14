@@ -164,7 +164,7 @@ class TagsController extends AppController {
 
                 $tags[$tagName] = [
                     'label' => $tagName,
-                    'value' => $tagId
+                    'value' => $tagName,
                 ];
 			}
 		}
