@@ -1,4 +1,8 @@
 <?php
+
+use Cake\Core\Configure;
+use Cake\Http\Exception\InternalErrorException;
+
 App::uses('AppController', 'Controller');
 /**
  * Commentaries Controller
@@ -504,9 +508,11 @@ class CommentariesController extends AppController {
 		$email = new CakeEmail('newsmedia_alert_report');
 		$recipient_email = Configure::read('admin_email');
 		$email->to($recipient_email);
-		$email->viewVars(array(
-			'results' => $this->Session->read('FlashMessage')
-		));
+		$results = $this->Session->read('FlashMessage');
+		$email->viewVars(array('results' => $results));
+        foreach ($results as $result) {
+            $this->sendSlackMessage($result);
+        }
 		return $email->send();
 	}
 
@@ -523,4 +529,25 @@ class CommentariesController extends AppController {
 		}
 		$this->render('DataCenter.Common/blank');
 	}
+
+    /**
+     * Sends a message to Slack
+     *
+     * @param string $text Message to send
+     * @return void
+     * @throws \Exception
+     */
+    public static function sendSlackMessage($text)
+    {
+        $url = Configure::read('slack_webhook');
+        $curlHandle = curl_init($url);
+        $payload = json_encode(compact('text'));
+        curl_setopt($curlHandle, CURLOPT_POSTFIELDS, $payload);
+        curl_setopt($curlHandle, CURLOPT_HTTPHEADER, ['Content-Type:application/json']);
+        curl_setopt($curlHandle, CURLOPT_RETURNTRANSFER, true);
+        if (!curl_exec($curlHandle)) {
+            throw new Exception('Error sending message to Slack. Details: ' . curl_error($curlHandle));
+        }
+        curl_close($curlHandle);
+    }
 }
