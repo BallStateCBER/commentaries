@@ -1,8 +1,4 @@
 <?php
-
-use Cake\Core\Configure;
-use Cake\Http\Exception\InternalErrorException;
-
 App::uses('AppController', 'Controller');
 /**
  * Commentaries Controller
@@ -510,7 +506,7 @@ class CommentariesController extends AppController {
 		$results = $this->Session->read('FlashMessage');
 		$email->viewVars(array('results' => $results));
         foreach ($results as $result) {
-            $this->sendSlackMessage($result);
+            $this->sendSlackMessage($result['message']);
         }
 		return $email->send();
 	}
@@ -539,14 +535,24 @@ class CommentariesController extends AppController {
     public static function sendSlackMessage($text)
     {
         $url = Configure::read('slack_webhook');
+        $retryAttempts = 2;
+        $delayBetweenAttempts = 1; // Seconds
         $curlHandle = curl_init($url);
         $payload = json_encode(compact('text'));
         curl_setopt($curlHandle, CURLOPT_POSTFIELDS, $payload);
         curl_setopt($curlHandle, CURLOPT_HTTPHEADER, ['Content-Type:application/json']);
         curl_setopt($curlHandle, CURLOPT_RETURNTRANSFER, true);
-        if (!curl_exec($curlHandle)) {
-            throw new Exception('Error sending message to Slack. Details: ' . curl_error($curlHandle));
+
+        // Try to send this message $retryAttempts + 1 times and log any errors
+        for ($attempt = 0; $attempt <= $retryAttempts; $attempt++) {
+            if (curl_exec($curlHandle)) {
+                break;
+            }
+            CakeLog::write('error', 'Error sending message to Slack. Details: ' . curl_error($curlHandle));
+            $microseconds = (int)($delayBetweenAttempts * 1000000);
+            usleep($microseconds);
         }
+
         curl_close($curlHandle);
     }
 }
